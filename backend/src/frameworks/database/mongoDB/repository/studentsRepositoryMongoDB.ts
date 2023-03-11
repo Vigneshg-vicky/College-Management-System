@@ -30,8 +30,8 @@ export const studentRepositoryMongoDB = () => {
         })
     }
 
-    const getStudent = async (id:string) => {
-        await Student.findById(id);
+    const getStudent = async (Reg_No:string) => {
+        await Student.findById(Reg_No);
     }
 
     return {
@@ -42,3 +42,4 @@ export const studentRepositoryMongoDB = () => {
 }
 
 export type studentRepositoryMongoDB = typeof studentRepositoryMongoDB;
+export type studentRepositoryMongoDBReturn = ReturnType<studentRepositoryMongoDB>
