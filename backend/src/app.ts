@@ -11,7 +11,8 @@ import errorHandlingMiddleware from './frameworks/webserver/middlewares/errorHan
 import AppError from './utils/appError'
 import serverConfig from './frameworks/webserver/server'
 
-colors.enable
+// colors.enable()
+
 
 dotenv.config({ path: 'config.env' })
 

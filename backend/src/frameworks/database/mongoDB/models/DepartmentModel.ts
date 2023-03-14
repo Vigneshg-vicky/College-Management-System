@@ -18,5 +18,5 @@ const DepartmentSchema = new Schema(
     }
 )
 
-const Department = model('Department', DepartmentSchema, 'department')
+const Department = model('Department', DepartmentSchema, 'Department')
 export default Department;

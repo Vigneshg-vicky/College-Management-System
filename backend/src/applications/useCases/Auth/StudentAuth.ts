@@ -1,16 +1,19 @@
-import { StudentLoginInterface } from "../../../types/StudentInterface";
+import { StudentInterface } from "../../../types/StudentInterface";
 import { HttpStatus } from "../../../types/httpStatus";
 import AppError from "../../../utils/appError";
-import { StudentDbInterface } from "../../repositories/studentRepositoryInterface";
+import { StudentDbInterface, StudentRepository } from "../../repositories/studentRepository";
 import { AuthServiceInterface } from "../../services/AuthServiceInterface";
+import { authService } from "../../../frameworks/services/authServices";
+import mongoose from "mongoose";
+import { FacultyDbInterface } from "../../repositories/FacultyRepository";
 
-const StudentLogin = async (
-    Reg_No: string,
+export const StudentLogin = async (
+    email: string,
     password: string,
     studentRepository: ReturnType<StudentDbInterface>,
     authService: ReturnType<AuthServiceInterface>
 ) => {
-    const student: StudentLoginInterface | null = await studentRepository.getStudent(Reg_No);
+    const student = await studentRepository.getStudent(email);
     if (!student) {
         throw new AppError('Invalid Credentials', HttpStatus.UNAUTHORIZED)
     }
@@ -22,4 +25,11 @@ const StudentLogin = async (
     return token;
 }
 
-export default StudentLogin;
+export const AddStudent = async (
+    Student:StudentInterface,
+    FacultyRepository:ReturnType<FacultyDbInterface>,
+    authService: ReturnType<AuthServiceInterface>
+) => {
+    Student.email = Student.email.toLowerCase();
+
+}

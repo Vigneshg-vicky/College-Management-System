@@ -29,5 +29,5 @@ const SubjectSchema = new Schema(
 }
 )
 
-const Subjects = model('Subjects',SubjectSchema,'subjects');
+const Subjects = model('Subjects',SubjectSchema,'Subjects');
 export default Subjects;

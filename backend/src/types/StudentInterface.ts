@@ -1,9 +1,16 @@
+import { Timestamp } from "@redis/time-series/dist/commands";
 import mongoose from "mongoose";
 
 export interface StudentLoginInterface {
     _id: string;
     Reg_No: string;
+    email:string;
     password: string;
+    department: mongoose.Types.ObjectId;
+    Joining_Year: Date;
+    Contact_No: number;
+
+
 }
 
 export interface StudentInterface {

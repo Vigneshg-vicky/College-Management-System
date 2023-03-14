@@ -25,5 +25,5 @@ const FacultySchema = new Schema(
     }
 )
 
-const Faculty = model('Faculty', FacultySchema, 'faculty')
+const Faculty = model('Faculty', FacultySchema, 'Faculty')
 export default Faculty;

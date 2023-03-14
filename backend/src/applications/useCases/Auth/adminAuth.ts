@@ -12,7 +12,7 @@ const adminLogin = async (email: string, password: string, adminRepository: Retu
     }
     const PasswordCheck = await authService.comparePassword(password, admin.password);
     if (!PasswordCheck) {
-        throw new AppError('Invalid Credentails', HttpStatus.UNAUTHORIZED);
+        throw new AppError('Password is incorrect', HttpStatus.UNAUTHORIZED);
     }
     const token = authService.generateToken(admin._id);
     return token;

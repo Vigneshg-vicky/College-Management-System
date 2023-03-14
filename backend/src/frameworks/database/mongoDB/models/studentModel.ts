@@ -18,7 +18,7 @@ const studentsSchema = new Schema(
             type:Date,
             required:true,
         },
-        Registeration_No:{
+        Reg_No:{
             type:String,
             required:true,
         },
@@ -26,10 +26,7 @@ const studentsSchema = new Schema(
             type:Number,
         }
     },
-    {
-        timestamps:true
-    }
 )
 
-const Student = model('Student',studentsSchema,'student')
+const Student = model('Student',studentsSchema,'Student')
 export default Student;

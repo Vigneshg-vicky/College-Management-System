@@ -5,7 +5,7 @@ const connection = () => {
     const client = createClient();
     client.on('error', err => console.log('Redis Client Error', err));
     client.connect().then(()=>{
-      console.log("Redis connected successfully".bg_red)
+      console.log("Redis connected successfully")
     }).catch((err)=>{
       console.log(err)
     })

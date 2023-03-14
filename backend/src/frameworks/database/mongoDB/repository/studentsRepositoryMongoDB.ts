@@ -1,5 +1,4 @@
-import mongoose from "mongoose";
-import { EditStudentInterface, StudentInterface } from "../../../../types/StudentInterface";
+import { EditStudentInterface, StudentLoginInterface, StudentInterface } from "../../../../types/StudentInterface";
 import Student from "../models/studentModel";
 
 
@@ -30,14 +29,21 @@ export const studentRepositoryMongoDB = () => {
         })
     }
 
-    const getStudent = async (Reg_No:string) => {
-        await Student.findById(Reg_No);
+    const getStudent = async (Reg_No: string) => {
+        const student: StudentLoginInterface | null = await Student.findById(Reg_No);
+        return student;
+    }
+
+    const getStudentByEmail = async (email:string) => {
+        const student:StudentLoginInterface | null = await Student.findOne({email})
+        return student
     }
 
     return {
         addStudent,
         editStudent,
         getStudent,
+        getStudentByEmail
     }
 }
 

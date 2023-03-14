@@ -7,9 +7,9 @@ import { redisClient } from "../../../app"
 
 const routes = (app: Application, redisClient:redisClient) => {
 
-    app.use('/api/v1/admin', adminRouter());
-    app.use('/api/v1/student', studentRouter(redisClient));
-    app.use('api/v1/faculty', facultyRouter(redisClient));
+    app.use('/api/admin', adminRouter());
+    app.use('/api/student', studentRouter(redisClient));
+    app.use('api/faculty', facultyRouter(redisClient));
     app.use('/api/auth',authRouter());
 }
 
