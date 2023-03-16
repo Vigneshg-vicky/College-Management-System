@@ -3,10 +3,12 @@ import mongoose from "mongoose";
 
 export interface StudentLoginInterface {
     _id: string;
+    name:string;
+
     Reg_No: string;
     email:string;
     password: string;
-    department: mongoose.Types.ObjectId;
+    department: string;
     Joining_Year: Date;
     Contact_No: number;
 
@@ -14,8 +16,9 @@ export interface StudentLoginInterface {
 }
 
 export interface StudentInterface {
-    name: string,
-    email: string,
+    name: string;
+    email: string;
+    password:string,
     department: mongoose.Types.ObjectId,
     year: Date,
     registration_No: string,

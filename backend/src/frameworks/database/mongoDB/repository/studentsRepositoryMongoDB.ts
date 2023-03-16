@@ -36,6 +36,7 @@ export const studentRepositoryMongoDB = () => {
 
     const getStudentByEmail = async (email:string) => {
         const student:StudentLoginInterface | null = await Student.findOne({email})
+        console.log(student)
         return student
     }
 

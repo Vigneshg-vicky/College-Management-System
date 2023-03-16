@@ -13,10 +13,13 @@ export const StudentLogin = async (
     studentRepository: ReturnType<StudentDbInterface>,
     authService: ReturnType<AuthServiceInterface>
 ) => {
-    const student = await studentRepository.getStudent(email);
+    const student = await studentRepository.getStudentByEmail(email);
     if (!student) {
         throw new AppError('Invalid Credentials', HttpStatus.UNAUTHORIZED)
     }
+    console.log(password)
+    console.log(student)
+    console.log(student.password)
     const isPasswordCorrect = await authService.comparePassword(password, student.password)
     if (!isPasswordCorrect) {
         throw new AppError('Password is incorrect!', HttpStatus.UNAUTHORIZED)

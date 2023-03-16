@@ -10,13 +10,18 @@ import routes from './frameworks/webserver/routes'
 import errorHandlingMiddleware from './frameworks/webserver/middlewares/errorHandlingMiddleware'
 import AppError from './utils/appError'
 import serverConfig from './frameworks/webserver/server'
+import cors from 'cors'
 
 // colors.enable()
 
 
 dotenv.config({ path: 'config.env' })
 
+
 const app: Application = express();
+
+app.use(cors());
+
 
 //-----Database Connection-----//
 
