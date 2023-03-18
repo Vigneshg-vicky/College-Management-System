@@ -4,7 +4,7 @@ import Student from "../models/studentModel";
 
 export const studentRepositoryMongoDB = () => {
     const addStudent = async (studentInfo: StudentInterface) => {
-        await Student.create
+        return await Student.create
             (
                 {
                     name: studentInfo.name,

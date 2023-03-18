@@ -3,6 +3,10 @@ export interface adminLoginPayload {
     password:string,
 }
 
+export interface departmentPayload {
+    department:string,
+}
+
 export interface studentLoginPayload {
     Reg_No?:string,
     email?:string,

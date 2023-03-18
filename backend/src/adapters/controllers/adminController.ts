@@ -11,7 +11,7 @@ const AdminController = (AdminDbRepository: AdminDbInterface, adminDbRepositoryI
     const dbRepositoryAdmin = AdminDbRepository(adminDbRepositoryImpl());
     const cacheRepository = cacheRepositoryInterface(cacheRepositoryImpl(cacheClient));
     const getAdmin = asyncHandler(async (req:Request,res:Response) => {
-    
+        
     })
 }
 

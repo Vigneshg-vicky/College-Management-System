@@ -25,7 +25,7 @@ const Adminlogin = () => {
     resolver: yupResolver(AdminSchema),
   });
 
-  const [verifyLogin] = useAdminLoginMutation();
+  const [verifyLogin,{isLoading}] = useAdminLoginMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState('');
