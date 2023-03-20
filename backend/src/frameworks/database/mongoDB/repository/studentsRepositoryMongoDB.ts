@@ -3,19 +3,19 @@ import Student from "../models/studentModel";
 
 
 export const studentRepositoryMongoDB = () => {
-    const addStudent = async (studentInfo: StudentInterface) => {
-        return await Student.create
-            (
-                {
-                    name: studentInfo.name,
-                    email: studentInfo.email,
-                    department: studentInfo.department,
-                    year: studentInfo.year,
-                    registration_No: studentInfo.registration_No,
-                    contact_No: studentInfo.contact_No,
-                }
-            )
-    }
+    const addStudent = async (studentInfo: StudentInterface) => await Student.create
+        (
+            {
+                name: studentInfo.name,
+                email: studentInfo.email,
+                department: studentInfo.department,
+                dob: studentInfo.dob,
+                Joining_Year: studentInfo.year,
+                Reg_No: studentInfo.Reg_No,
+                contact_No: studentInfo.contact_No,
+            }
+        )
+
     const editStudent = async (studentId: string, studentInfo: EditStudentInterface) => {
         await Student.updateOne({ _id: studentId }, {
             $push: {
@@ -24,7 +24,7 @@ export const studentRepositoryMongoDB = () => {
                 department: studentInfo.department,
                 year: studentInfo.year,
                 registration_No: studentInfo.registration_No,
-                contact_No: studentInfo.contact_No,
+                Contact_No: studentInfo.contact_No,
             }
         })
     }
@@ -34,9 +34,13 @@ export const studentRepositoryMongoDB = () => {
         return student;
     }
 
-    const getStudentByEmail = async (email:string) => {
-        const student:StudentLoginInterface | null = await Student.findOne({email})
-        console.log(student)
+    const getAllStudentsCount = async () => {
+        const students: number | null = await Student.find().count();
+        return students;
+    }
+
+    const getStudentByEmail = async (email: string) => {
+        const student: StudentLoginInterface | null = await Student.findOne({ email })
         return student
     }
 
@@ -44,7 +48,8 @@ export const studentRepositoryMongoDB = () => {
         addStudent,
         editStudent,
         getStudent,
-        getStudentByEmail
+        getStudentByEmail,
+        getAllStudentsCount,
     }
 }
 

@@ -10,12 +10,12 @@ const studentsSchema = new Schema(
             type:String,
             required:[true,'Please enter an Email!']
         },
-        password:{
-            type:String,
-            required:[true,'Please enter a password']
-        },
+        // password:{
+        //     type:String,
+        //     required:[true,'Please enter a password']
+        // },
         department:{
-            type:mongoose.Types.ObjectId,
+            type:String,
             required:[true,'Select a department!']
         },
         Joining_Year:{

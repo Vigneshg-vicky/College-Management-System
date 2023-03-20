@@ -28,11 +28,3 @@ export const StudentLogin = async (
     return token;
 }
 
-export const AddStudent = async (
-    Student:StudentInterface,
-    FacultyRepository:ReturnType<FacultyDbInterface>,
-    authService: ReturnType<AuthServiceInterface>
-) => {
-    Student.email = Student.email.toLowerCase();
-
-}

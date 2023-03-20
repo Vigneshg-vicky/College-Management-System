@@ -28,11 +28,14 @@ const Adminlogin = () => {
   const [verifyLogin,{isLoading}] = useAdminLoginMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false)
   const [loginError, setLoginError] = useState('');
   const submitHandler = async (data: adminLoginPayload) => {
     try {
+      setLoading(true)
       const res: ILoginResponse = await verifyLogin(data).unwrap();
       if (res.status === 'success') {
+        setLoading(false)
         dispatch(setAdminToken(res));
         navigate('/admin/home')
       }

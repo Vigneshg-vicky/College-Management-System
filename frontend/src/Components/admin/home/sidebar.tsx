@@ -12,6 +12,7 @@ export default function SideBar() {
       <Sidebar visible={visible} onHide={() => setVisible(false)}>
         {/* <h2>Sidebar</h2> */}
         <Button onClick={()=> navigate('/admin/home')}  className='w-full m-1'>Home</Button>
+        <Button onClick={()=> navigate('/admin/add-student')} className='w-full m-1'>Add Student</Button>
         <Button onClick={()=> navigate('/admin/add-faculty')} className='w-full m-1'>Add Faculty</Button>
         <Button onClick={()=> navigate('/admin/add-subject')} className='w-full m-1'>Add Subject</Button>
         <Button onClick={()=> navigate('/admin/faculty')} className='w-full m-1'>Our Faculties</Button>

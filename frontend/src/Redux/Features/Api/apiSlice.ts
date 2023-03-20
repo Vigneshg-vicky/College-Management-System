@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { adminLoginPayload, departmentPayload } from '../../../Types/payloadInterface';
-import { ILoginResponse, IBasicResponse } from '../../../Types/ResponseInterface';
+import { adminLoginPayload, departmentPayload, FormTablePayload } from '../../../Types/payloadInterface';
+import { ILoginResponse, IBasicResponse, IDepartmentResponse } from '../../../Types/ResponseInterface';
 
 const baseUrl = "http://localhost:8000/api"
 
@@ -24,7 +24,7 @@ const baseQuery = fetchBaseQuery({
 export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery,
-    tagTypes: ['student', 'admin', 'faculty'],
+    tagTypes: ['student', 'admin', 'faculty', 'department'],
     endpoints: (builder) => ({
         adminLogin: builder.mutation<ILoginResponse, adminLoginPayload>({
             query: (data) => ({
@@ -41,6 +41,17 @@ export const apiSlice = createApi({
                 body: data,
             }),
             invalidatesTags: ['admin'],
+        }),
+        getDepartment: builder.query<IDepartmentResponse, void>({
+            query: () => '/admin/departments',
+            providesTags: ['admin', 'department']
+        }),
+        AddStudent: builder.mutation<IBasicResponse, FormTablePayload>({
+            query: (data) => ({
+                url: '/admin/add-student',
+                method: 'POST',
+                body: data
+            })
         })
     })
 })
@@ -48,4 +59,6 @@ export const apiSlice = createApi({
 export const {
     useAdminLoginMutation,
     useAdminAddDepartmentMutation,
+    useGetDepartmentQuery,
+    useAddStudentMutation,
 } = apiSlice;

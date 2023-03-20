@@ -8,25 +8,25 @@ export default function AdvancedDemo() {
         <div className="card flex justify-content-center">
             <Card title = 'Details' className="md:w-25rem">
                 {/* <div className="container flex flex-column"> */}
-                    <div className='name bg-primary w-full flex justify-content-evenly mt-2 w-6 h-3rem'>
+                    <div className='name bg-primary w-full flex justify-content-between align-items-start mt-2 h-3rem' style={{width:'fit-content !important'}}>
                         <div className="key text-left" style={{backgroundColor:'red'}}>name :</div>
-                        <div className="val">Vicky</div>
+                        <div className="val pl-5">Vicky</div>
                     </div>
-                    <div className='name w-full flex justify-content-evenly mt-5 w-6 text-left'>
+                    <div className='name w-full flex justify-content-between mt-5 text-left'>
                         <div className="key align-items-start text-left">Email</div>
-                        <div className="val">Vicky</div>
+                        <div className="val pl-5">vickyggnair007@gmail.com</div>
                     </div>
-                    <div className='name w-full flex justify-content-evenly mt-5 w-6 text-left'>
+                    <div className='name w-full flex justify-content-between mt-5 text-left'>
                         <div className="key text-left">Total Faculties</div>
-                        <div className="val">Vicky</div>
+                        <div className="val pl-5">50</div>
                     </div>
-                    <div className='name w-full flex justify-content-evenly mt-5 w-6 text-left'>
+                    <div className='name w-full flex justify-content-between mt-5 text-left'>
                         <div className="key text-left">Total Departments</div>
-                        <div className="val">Vicky</div>
+                        <div className="val pl-5">05</div>
                     </div>
-                    <div className='name w-full flex justify-content-evenly mt-5 w-6 text-left'>
+                    <div className='name w-full flex justify-content-between mt-5 text-left'>
                         <div className="key text-left">Total Subjects</div>
-                        <div className="val">Vicky</div>
+                        <div className="val pl-5">22</div>
                     </div>
                 {/* </div> */}
             </Card>
