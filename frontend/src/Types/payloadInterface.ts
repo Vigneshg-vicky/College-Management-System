@@ -9,7 +9,7 @@ export interface FormTablePayload {
     date: string,
     contact_no: number,
     gender?: string,
-    department?: string,
+    department?: string ,
 
 }
 

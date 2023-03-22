@@ -12,7 +12,8 @@ export const studentRepositoryMongoDB = () => {
                 dob: studentInfo.dob,
                 Joining_Year: studentInfo.year,
                 Reg_No: studentInfo.Reg_No,
-                contact_No: studentInfo.contact_No,
+                Contact_No: studentInfo.contact_no,
+                gender:studentInfo.gender
             }
         )
 
@@ -22,7 +23,7 @@ export const studentRepositoryMongoDB = () => {
                 name: studentInfo.name,
                 email: studentInfo.email,
                 department: studentInfo.department,
-                year: studentInfo.year,
+                Joining_Year: studentInfo.year,
                 registration_No: studentInfo.registration_No,
                 Contact_No: studentInfo.contact_No,
             }

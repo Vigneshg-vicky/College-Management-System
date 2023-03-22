@@ -20,6 +20,7 @@ import AddDepartment from './Pages/Admin/AddDepartment';
 import { ToastContainer } from 'react-toastify';
 import React from "react";
 import AddStudent from './Pages/Admin/addStudent';
+import FacultyAdd from './Pages/Admin/FacultyAdd';
 
 export function LoadingSpinner() {
   return (
@@ -42,6 +43,7 @@ function App() {
         <Route path="/" element={<Navigate to="/student/login" />} />
         <Route path='/' element = {<AdminOutlet/>}>
         <Route path='/admin/add-student' element={<AddStudent />} />
+        <Route path='/admin/add-faculty' element={<FacultyAdd />} />
         <Route path='/admin/home' element={<Home />} />
         <Route path='/admin/add-department' element={<AddDepartment />} />
         <Route path='/faculty/login' element={<FacultyLogin />} />

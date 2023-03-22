@@ -14,6 +14,9 @@ import { StudentDbInterface } from "../../applications/repositories/studentRepos
 import { studentRepositoryMongoDB } from "../../frameworks/database/mongoDB/repository/studentsRepositoryMongoDB";
 import { RegisterNumberInterface } from "../../applications/services/generateRegisterNumber";
 import { RegistrationNumber } from "../../frameworks/services/GenerateRegisteration";
+import { FacultyRepositoryMongoDb } from "../../frameworks/database/mongoDB/repository/FacultyRepositoryMongoDb";
+import { FacultyDbInterface } from "../../applications/repositories/FacultyRepository";
+import { AddFacultyInterface } from "../../types/FaculyInterface";
 
 const AdminController = (departmentDbRepository: DepartmentDbInterface,
     departmentDbImpl: DepartmentdRepositoryMongoDb,
@@ -26,12 +29,15 @@ const AdminController = (departmentDbRepository: DepartmentDbInterface,
     studentDbRepositoryImpl: studentRepositoryMongoDB,
     RegisterNumberInterface: RegisterNumberInterface,
     RegisterNumberImpl: RegistrationNumber,
+    FacultyImpl: FacultyRepositoryMongoDb,
+    facultyInterface: FacultyDbInterface,
 ) => {
     const DbRepositoryDepartment = departmentDbRepository(departmentDbImpl());
     const dbRepositoryAdmin = AdminDbRepository(adminDbRepositoryImpl());
     const cacheRepository = cacheRepositoryInterface(cacheRepositoryImpl(cacheClient));
     const dbRepositoryStudent = studentDbRepository(studentDbRepositoryImpl());
     const registerNoService = RegisterNumberInterface(RegisterNumberImpl())
+    const dbFacultyRepository = facultyInterface(FacultyImpl());
 
 
     const AddDepartment = asyncHandler(async (req: Request, res: Response) => {
@@ -56,37 +62,64 @@ const AdminController = (departmentDbRepository: DepartmentDbInterface,
     })
 
     const AddStudent = asyncHandler(async (req: Request, res: Response) => {
-        const { name, email, joiningYear, department, gender, contact_no } = req.body;
-        const studentData = {
+        const { name, email, date, department, gender, contact_no } = req.body;
+        const studentData: StudentInterface = {
             name,
             email,
-            year: joiningYear,
+            year: date,
             department,
             gender,
             contact_no,
         }
         console.log(studentData)
 
-
-
         const StudentAdd = await addStudent(studentData, dbRepositoryStudent, registerNoService)
 
         console.log('object')
-        console.log('object',StudentAdd)
+        console.log('object', StudentAdd)
 
         res.json({
             status: 'success',
             message: 'Student Added!',
             StudentAdd
         })
+    })
 
+    const AdminHomeData = asyncHandler(async (req: Request, res: Response) => {
+        const departments = await DbRepositoryDepartment.TotalDepartment();
+        const students = await dbRepositoryStudent.getAllStudentsCount();
+        const faculty = await dbFacultyRepository.TotalFaculty();
+
+        console.log(departments, students, faculty)
+
+        res.json({
+            status: 'success',
+            message: 'data fetched',
+            departments,
+            students,
+            faculty
+        })
 
     })
+
+    const addFaculty = asyncHandler(async (req: Request, res: Response) => {
+        const { name, email, designation, department, contact } = req.body;
+        const facultyData: AddFacultyInterface = { name, email, designation, department, contact };
+        const FacultyAdd = await dbFacultyRepository.addFaculty(facultyData);
+        res.json({
+            status: 'success',
+            message: 'faculty added',
+            FacultyAdd
+        })
+    })
+
 
     return {
         AddDepartment,
         getDepartment,
         AddStudent,
+        AdminHomeData,
+        addFaculty
     }
 }
 

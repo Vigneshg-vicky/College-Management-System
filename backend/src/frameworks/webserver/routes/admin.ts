@@ -11,6 +11,8 @@ import { DepartmentdRepositoryMongoDb } from "../../database/mongoDB/repository/
 import { studentRepositoryMongoDB } from "../../database/mongoDB/repository/studentsRepositoryMongoDB"
 import { redisRepository } from "../../database/redis/setCache"
 import { RegistrationNumber } from "../../services/GenerateRegisteration"
+import { FacultyRepositoryMongoDb } from "../../database/mongoDB/repository/FacultyRepositoryMongoDb"
+import { FacultyRepository } from "../../../applications/repositories/FacultyRepository"
 
 export default function adminRouter() {
     const router = express.Router()
@@ -26,6 +28,8 @@ export default function adminRouter() {
         studentRepositoryMongoDB,
         RegisterNumber,
         RegistrationNumber,
+        FacultyRepositoryMongoDb,
+        FacultyRepository,
     );
 
     router.post('/add-department', controller.AddDepartment)
@@ -33,6 +37,10 @@ export default function adminRouter() {
     router.get('/departments', controller.getDepartment)
 
     router.post('/add-student', controller.AddStudent)
+
+    router.get('/home', controller.AdminHomeData)
+
+    router.post('/add-faculty', controller.addFaculty)
 
 
 

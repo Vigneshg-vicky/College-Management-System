@@ -13,10 +13,11 @@ export interface StudentInterface {
     name: string;
     email: string;
     department: string,
-    year: Date,
+    year: string,
     dob?: string,
-    contact_No?: number,
+    contact_no?: number,
     Reg_No?: string,
+    gender: string,
 }
 
 export interface EditStudentInterface {
@@ -27,4 +28,11 @@ export interface EditStudentInterface {
     year?: Date,
     registration_No?: string,
     contact_No?: number,
+}
+
+export interface SubjectInterface {
+    name: string,
+    code: string,
+    department: string,
+    totalLecture: number,
 }

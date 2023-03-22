@@ -9,14 +9,16 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAddStudentMutation, useGetDepartmentQuery } from '../Redux/Features/Api/apiSlice';
 import { FormTablePayload } from '../Types/payloadInterface';
-import { IDepartmentResponse } from '../Types/ResponseInterface';
+import { toast } from 'react-toastify';
+import { setDepartmentInterface, setGenderInterface } from '../Types/VariableInterface';
+import { convertDate } from '../HelperFunctions/dateConverter';
 // import yupre
 
 const FormSchema = yup.object().shape({
     email: yup.string().email().required(),
     name: yup.string().min(4).required(),
     // department: yup.string().required(),
-    date: yup.string().required(),
+    date: yup.date().required(),
     contact_no: yup.number().required(),
     // gender: yup.string().required(),
     // dob: yup.date().required(),
@@ -36,19 +38,31 @@ const FormTable = () => {
 
     const { data, isLoading, isSuccess, isError, refetch, error, isFetching } = useGetDepartmentQuery();
 
-    const [selectedGender, setSelectedGender] = useState();
-    const [selectedDepartment, setSelectedDepartment] = useState<string>()
-    // console.log(data)
+    const [selectedGender, setSelectedGender] = useState<setGenderInterface>();
+    const [Error, setError] = useState('')
+    const [selectedDepartment, setSelectedDepartment] = useState<setDepartmentInterface>()
+    console.log(selectedDepartment)
 
     const submitHandler = async (data: FormTablePayload) => {
         try {
-            data.department = selectedDepartment;
-            data.gender = selectedGender;
-            const res = await AddStudent(data).unwrap();
-            if (res.status == 'success') {
-                console.log('object')
+            const convertedDate = convertDate(data.date)
+            data.date = convertedDate;
+            console.log(data)
+            if (selectedDepartment?._id) {
+                data.department = selectedDepartment._id;
             }
-        } catch (error) {
+            data.gender = selectedGender?.gender;
+            console.log(data)
+            const res = await AddStudent(data).unwrap();
+            console.log('this is the result')
+            console.log(res)
+            if (res.status == 'success') {
+                console.log('success')
+                toast('Student Added!')
+            }
+        } catch (error: any) {
+            console.log(error)
+            setError(error.data.message)
         }
     }
 
@@ -70,6 +84,9 @@ const FormTable = () => {
                     <div className='pl-5  col-6'>
                         <label htmlFor="name" className="block text-900 font-medium mb-2">name</label>
                         <InputText id="name" type="text" placeholder="Student Name " className="w-5 mb-3" {...register("name")} />
+                        <small className="authErrors">
+                            {errors.name?.message}
+                        </small>
                     </div>
                     <div className='pl-5 col-6'>
                         <label htmlFor="email" className="block text-900 font-medium mb-2">Email</label>
@@ -81,6 +98,13 @@ const FormTable = () => {
                     <div className='pl-5 col-6'>
                         <label htmlFor="department" className="block text-900 font-medium mb-2">Department</label>
                         <Dropdown value={selectedDepartment} placeholder="Select Department" onChange={(e) => setSelectedDepartment(e.value)} options={data?.Departments} optionLabel='department' />
+                        <br />
+                        {selectedDepartment ?
+                            ""
+                            :
+                            <small className="authErrors">
+                                Select a department!
+                            </small>}
                     </div>
                     <div className='pl-5 col-6'>
                         <label htmlFor="date" className="block text-900 font-medium mb-2">Joining Date</label>
@@ -92,7 +116,7 @@ const FormTable = () => {
                     </div>
                     <div className='pl-5 col-6'>
                         <label htmlFor="gender" className="block text-900 font-medium mb-2">Gender</label>
-                        <Dropdown value={selectedGender} options={gender} optionLabel="gender" placeholder="Select a City" onChange={(e) => setSelectedGender(e.value)} />
+                        <Dropdown value={selectedGender} options={gender} optionLabel="gender" placeholder="select gender" onChange={(e) => setSelectedGender(e.value)} />
                     </div>
                     <div className='w-full align-items-center left-6 ml-8'>
                         <Button type='submit' label="Sign In" icon="pi pi-user" className="w-6 m-5 bg-white text-primary" />

@@ -3,7 +3,7 @@ import { InputText } from 'primereact/inputtext'
 import SideBar from '../../Components/admin/home/sidebar'
 import NavBar from '../../Components/NavBar/Navbar'
 import './addDepartment.css'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
