@@ -9,7 +9,7 @@ import { cacheRepositoryInterface } from "../../applications/repositories/cacheR
 import { redisRepository } from "../../frameworks/database/redis/setCache";
 import { redisClient } from "../../app";
 import { addStudent } from "../../applications/useCases/Student/addStudent";
-import { StudentInterface } from "../../types/StudentInterface";
+import { StudentInterface, SubjectInterface } from "../../types/StudentInterface";
 import { StudentDbInterface } from "../../applications/repositories/studentRepository";
 import { studentRepositoryMongoDB } from "../../frameworks/database/mongoDB/repository/studentsRepositoryMongoDB";
 import { RegisterNumberInterface } from "../../applications/services/generateRegisterNumber";
@@ -113,13 +113,25 @@ const AdminController = (departmentDbRepository: DepartmentDbInterface,
         })
     })
 
+    const addSubject = asyncHandler(async (req: Request, res: Response) => {
+        const { name, code, department, totalLecture } = req.body;
+        const SubjectInfo: SubjectInterface = { name, code, department, totalLecture };
+        await DbRepositoryDepartment.addSubject(SubjectInfo)
+
+        res.json({
+            status: 'success',
+            message: 'subject added!',
+        })
+    })
+
 
     return {
         AddDepartment,
         getDepartment,
         AddStudent,
         AdminHomeData,
-        addFaculty
+        addFaculty,
+        addSubject,
     }
 }
 

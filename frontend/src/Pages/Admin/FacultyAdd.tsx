@@ -1,16 +1,19 @@
 import React from 'react'
 import SideBar from '../../Components/admin/home/sidebar'
+import AddFaculty from '../../Components/Cards/addFaculty'
 import NavBar from '../../Components/NavBar/Navbar'
 
 const FacultyAdd = () => {
     return (
-        <div className="main">
+        <div className="main ">
             <NavBar />
             <div>
                 <SideBar />
             </div>
-            <div className="box">
-                
+            <div className="container flex justify-content-center align-items-center" style={{height:'60vh'}}>
+                {/* <div className="box bg-primary"> */}
+                    <AddFaculty />
+                {/* </div> */}
             </div>
         </div>
     )

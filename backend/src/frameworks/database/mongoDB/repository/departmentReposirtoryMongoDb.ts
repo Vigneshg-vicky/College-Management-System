@@ -16,7 +16,7 @@ export const DepartmentdRepositoryMongoDb = () => {
 
     const addSubject = async (SubjectInfo: SubjectInterface) => {
         const department = SubjectInfo.department;
-        const added = await Department.findByIdAndUpdate({ _id: department },
+        await Department.findByIdAndUpdate({ _id: department },
             {
                 $push:
                 {
@@ -28,6 +28,7 @@ export const DepartmentdRepositoryMongoDb = () => {
                     }
                 }
             })
+            
     }
 
     return {

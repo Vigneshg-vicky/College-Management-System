@@ -121,6 +121,7 @@ const FormTable = () => {
                     <div className='w-full align-items-center left-6 ml-8'>
                         <Button type='submit' label="Sign In" icon="pi pi-user" className="w-6 m-5 bg-white text-primary" />
                     </div>
+                    <label htmlFor="authError text-center" style={{color:'red'}}>{Error}</label>
                 </div>
             </form>
         </div>

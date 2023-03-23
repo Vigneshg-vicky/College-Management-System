@@ -15,10 +15,11 @@ const FacultySchema = new Schema(
             type: String,
             required: [true, 'Select the designation'],
         },
-        password: {
+        department: {
             type: String,
-            required: [true, 'Please enter the password!'],
-        }
+            required: [true, 'Select the designation'],
+            unique: [true, 'department should be unique!'],
+        },
     },
     {
         timestamps: true,

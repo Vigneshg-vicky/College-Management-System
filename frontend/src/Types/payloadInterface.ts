@@ -3,6 +3,11 @@ export interface adminLoginPayload {
     password: string,
 }
 
+export interface FacultyformPayload {
+    email:string,
+    name:string,
+}
+
 export interface FormTablePayload {
     name: string,
     email: string,

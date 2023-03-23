@@ -52,6 +52,13 @@ export const apiSlice = createApi({
                 method: 'POST',
                 body: data
             })
+        }),
+        addFaculty: builder.mutation({
+            query: (data) => ({
+                url: '/admin/add-faculty',
+                method: 'POST',
+                body: data,
+            })
         })
     })
 })
@@ -61,4 +68,5 @@ export const {
     useAdminAddDepartmentMutation,
     useGetDepartmentQuery,
     useAddStudentMutation,
+    useAddFacultyMutation,
 } = apiSlice;

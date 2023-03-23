@@ -6,3 +6,7 @@ export interface setDepartmentInterface {
 export interface setGenderInterface {
     gender:string,
 }
+
+export interface DesignationInterface {
+    name:string,
+}
