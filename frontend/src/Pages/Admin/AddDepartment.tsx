@@ -10,6 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { departmentPayload } from '../../Types/payloadInterface'
 import { useAdminAddDepartmentMutation } from '../../Redux/Features/Api/apiSlice'
+import { useState } from 'react'
 
 
 const departmentSchema = yup.object().shape({
@@ -24,20 +25,21 @@ const AddDepartment = () => {
         resolver: yupResolver(departmentSchema)
     })
 
+    const [Error, setError] = useState('')
+
     const [addDepartment] = useAdminAddDepartmentMutation();
 
     const submitHandler = async (data: departmentPayload) => {
         try {
             const res = await addDepartment(data).unwrap();
-            console.log('hiiiiiiiiiii')
             console.log(res)
             if (res.status === 'success') {
-                toast('Success')
+                toast('Department Added!')
             }
-        } catch (err:any) {
+        } catch (err: any) {
             console.log(err.data.message.split(' ')[0])
-            if(err.data.message.split(' ')[0] == 'E11000'){
-                toast('Department already exists!')
+            if (err.data.message.split(' ')[0] == 'E11000') {
+                setError('Department already exists!')
             }
         }
     }
@@ -54,14 +56,16 @@ const AddDepartment = () => {
                         <h4>Department Name</h4>
                         <div className="input h-5rem" style={{ display: 'grid', placeContent: 'center' }}>
                             <InputText id='department' {...register("department")} />
-                            <small className="authErrors">
+                            <small style={{color:'red'}}>
                                 {errors.department?.message}
                             </small>
                         </div>
                         <div className="button btn" style={{ display: 'grid', placeContent: 'center' }}>
                             <Button type='submit' label="Add Department" severity="success" icon="pi pi-check" />
                         </div>
-                    </form>
+                    </form><br />
+
+                    <label style={{color:'red'}} htmlFor="">{Error}</label>
                 </div>
             </div>
         </div>

@@ -10,10 +10,8 @@ const FacultyAdd = () => {
             <div>
                 <SideBar />
             </div>
-            <div className="container flex justify-content-center align-items-center" style={{height:'60vh'}}>
-                {/* <div className="box bg-primary"> */}
-                    <AddFaculty />
-                {/* </div> */}
+            <div className="container flex justify-content-center align-items-center" style={{ height: '60vh' }}>
+                <AddFaculty />
             </div>
         </div>
     )

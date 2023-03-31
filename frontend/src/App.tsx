@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import AdminOutlet from './AdminOutlet';
+import AdminOutlet from './Outlet/AdminOutlet';
 
 import "primeflex/primeflex.css";
 //theme
@@ -15,12 +15,17 @@ import "primeicons/primeicons.css";
 import LoginPage from './Pages/Admin/LoginPage';
 import FacultyLogin from './Pages/Faculty/Login';
 import StudentLogin from './Pages/Student/Login';
-import Home from './Pages/Admin/Home';
+import AdminHome from './Pages/Admin/Home';
 import AddDepartment from './Pages/Admin/AddDepartment';
 import { ToastContainer } from 'react-toastify';
 import React from "react";
 import AddStudent from './Pages/Admin/addStudent';
 import FacultyAdd from './Pages/Admin/FacultyAdd';
+import AddSubject from './Pages/Admin/SubjectAdd';
+import Home from './Pages/Student/Home';
+import FacultyHome from './Pages/Faculty/facultyHome';
+import OurFaculties from './Pages/Admin/OurFaculties';
+import OurStudents from './Pages/Admin/OurStudents';
 
 export function LoadingSpinner() {
   return (
@@ -33,21 +38,33 @@ export function LoadingSpinner() {
 
 
 function App() {
+
   return (
     <Router>
       <Routes>
         <Route path='/admin/login' element={<LoginPage />} />
         <Route path='/student/login' element={<StudentLogin />} />
+        <Route path='/faculty/login' element={<StudentLogin />} />
+        {/* <Route path='/faculty/login' element={<FacultyLogin />} /> */}
 
-        {/* Protected Routes */}
-        <Route path="/" element={<Navigate to="/student/login" />} />
-        <Route path='/' element = {<AdminOutlet/>}>
-        <Route path='/admin/add-student' element={<AddStudent />} />
-        <Route path='/admin/add-faculty' element={<FacultyAdd />} />
-        <Route path='/admin/home' element={<Home />} />
-        <Route path='/admin/add-department' element={<AddDepartment />} />
-        <Route path='/faculty/login' element={<FacultyLogin />} />
+        {/* Protected Routes Admin */}
+        <Route path='/' element={<AdminOutlet />}>
+          <Route path='/admin/add-student' element={<AddStudent />} />
+          <Route path='/admin/add-faculty' element={<FacultyAdd />} />
+          <Route path='/admin/home' element={<AdminHome />} />
+          <Route path='/admin/add-department' element={<AddDepartment />} />
+          <Route path='/admin/add-subject' element={<AddSubject />} />
+          <Route path='/admin/faculties' element={<OurFaculties />} />
+          <Route path='/admin/students' element={<OurStudents />} />
         </Route>
+
+
+        <Route path="/" element={<Navigate to="/student/login" />} />
+
+        {/* Protected Student Routes */}
+        <Route path='/student/home' element={<Home />} />
+        <Route path='/faculty/home' element={<FacultyHome />} />
+
 
       </Routes>
       <ToastContainer

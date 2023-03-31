@@ -5,7 +5,7 @@ import { AuthServiceInterface } from "../../services/AuthServiceInterface";
 
 export const FacultyLogin = async (
     email: string,
-    password: string,
+    reg_no: string,
     FacultyRepository: ReturnType<FacultyDbInterface>,
     AuthService: ReturnType<AuthServiceInterface>,
 
@@ -14,8 +14,7 @@ export const FacultyLogin = async (
     if (!faculty) {
         throw new AppError('Invalid Credentials', HttpStatus.UNAUTHORIZED)
     }
-    const checkPassword = await AuthService.comparePassword(password, faculty.password)
-    if (!checkPassword) {
+    if (reg_no !== faculty.reg_no) {
         throw new AppError('Password incorrect!', HttpStatus.UNAUTHORIZED)
     }
     const token = await AuthService.generateToken(faculty._id)

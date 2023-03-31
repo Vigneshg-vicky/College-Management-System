@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { adminLoginPayload, departmentPayload, FormTablePayload } from '../../../Types/payloadInterface';
-import { ILoginResponse, IBasicResponse, IDepartmentResponse } from '../../../Types/ResponseInterface';
+import { ILoginResponse, IBasicResponse, IDepartmentResponse, IAdminResponse } from '../../../Types/ResponseInterface';
 
 const baseUrl = "http://localhost:8000/api"
 
@@ -42,6 +42,12 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: ['admin'],
         }),
+
+        getAdminHome: builder.query<IAdminResponse, void>({
+            query: () => '/admin/home',
+            providesTags: ['admin', 'department', 'faculty', 'student']
+        }),
+
         getDepartment: builder.query<IDepartmentResponse, void>({
             query: () => '/admin/departments',
             providesTags: ['admin', 'department']
@@ -59,7 +65,36 @@ export const apiSlice = createApi({
                 method: 'POST',
                 body: data,
             })
+        }),
+        addSubject: builder.mutation({
+            query: (data) => ({
+                url: '/admin/add-subject',
+                method: 'POST',
+                body: data,
+            })
+        }),
+        studentLogin: builder.mutation({
+            query: (data) => ({
+                url: '/auth/student-login',
+                method: 'POST',
+                body: data
+            })
+        }),
+
+        facultyLogin: builder.mutation({
+            query: (data) => ({
+                url: '/faculty/login',
+                method: 'POST',
+                body: data,
+            })
+        }),
+        getStudentWithDept: builder.query({
+            query: (data) => `/admin/students/${data._id}`,
+            providesTags: ['admin', 'student'],
         })
+
+
+
     })
 })
 
@@ -67,6 +102,12 @@ export const {
     useAdminLoginMutation,
     useAdminAddDepartmentMutation,
     useGetDepartmentQuery,
+    useGetAdminHomeQuery,
     useAddStudentMutation,
     useAddFacultyMutation,
+    useAddSubjectMutation,
+    useFacultyLoginMutation,
+    useStudentLoginMutation,
+    useGetStudentWithDeptQuery,
+
 } = apiSlice;

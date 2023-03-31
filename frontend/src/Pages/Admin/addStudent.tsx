@@ -2,7 +2,7 @@ import React from 'react'
 import { Form } from 'react-router-dom'
 import SideBar from '../../Components/admin/home/sidebar'
 import Adminlogin from '../../Components/admin/login'
-import FormTable from '../../Components/formTable'
+import FormTable from '../../Components/Tables/formTable'
 import NavBar from '../../Components/NavBar/Navbar'
 
 const AddStudent = () => {

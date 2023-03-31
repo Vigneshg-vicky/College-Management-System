@@ -13,6 +13,7 @@ import { redisRepository } from "../../database/redis/setCache"
 import { RegistrationNumber } from "../../services/GenerateRegisteration"
 import { FacultyRepositoryMongoDb } from "../../database/mongoDB/repository/FacultyRepositoryMongoDb"
 import { FacultyRepository } from "../../../applications/repositories/FacultyRepository"
+import adminAuthMiddleware from "../middlewares/AdminAuthMiddleware"
 
 export default function adminRouter() {
     const router = express.Router()
@@ -32,18 +33,19 @@ export default function adminRouter() {
         FacultyRepository,
     );
 
-    router.post('/add-department', controller.AddDepartment)
+    router.post('/add-department', adminAuthMiddleware, controller.AddDepartment)
 
-    router.get('/departments', controller.getDepartment)
+    router.get('/departments', adminAuthMiddleware, controller.getDepartment)
 
-    router.post('/add-student', controller.AddStudent)
+    router.post('/add-student', adminAuthMiddleware, controller.AddStudent)
 
-    router.get('/home', controller.AdminHomeData)
+    router.get('/home', adminAuthMiddleware, controller.AdminHomeData)
+
+    router.get('/students/:id', adminAuthMiddleware, controller.getStudentsWithDept)
 
     router.post('/add-faculty', controller.addFaculty)
 
-
-
+    router.post('/add-subject', controller.addSubject)
 
 
     return router

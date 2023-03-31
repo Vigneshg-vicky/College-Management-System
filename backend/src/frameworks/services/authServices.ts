@@ -17,12 +17,15 @@ export const authService = () => {
         return token;
     }
 
-    const verifyToken = (token: string) => {
-        return jwt.verify(token, process.env.JWT_SECRET!)
+    const verifyToken = async(token: string) => {
+        const decodedToken = await jwt.verify(token, process.env.JWT_SECRET!)
+        console.log('entered veriy token',decodedToken)
+        return decodedToken;
     }
 
 
-    return {encryptPassword,
+    return {
+        encryptPassword,
         comparePassword,
         generateToken,
         verifyToken

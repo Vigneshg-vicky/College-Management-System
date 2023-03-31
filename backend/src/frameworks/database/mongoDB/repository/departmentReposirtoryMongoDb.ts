@@ -7,7 +7,11 @@ export const DepartmentdRepositoryMongoDb = () => {
 
     const addDepartment = async (department: string) => await Department.create({ department })
 
-    const getDepartment = async () => await Department.find({}).select('department');
+    const getDepartment = async () => {
+        const dept = await Department.find({}).select('department');
+        console.log(dept)
+        return dept
+    }
 
     const TotalDepartment = async () => {
         const departments = await Department.find().count();
@@ -16,6 +20,7 @@ export const DepartmentdRepositoryMongoDb = () => {
 
     const addSubject = async (SubjectInfo: SubjectInterface) => {
         const department = SubjectInfo.department;
+        console.log('this is the data', SubjectInfo)
         await Department.findByIdAndUpdate({ _id: department },
             {
                 $push:
@@ -24,11 +29,11 @@ export const DepartmentdRepositoryMongoDb = () => {
                     {
                         subjectCode: SubjectInfo.code,
                         subjectName: SubjectInfo.name,
-                        totalLecture: SubjectInfo.totalLecture,
+                        totalLecture: SubjectInfo.total,
                     }
                 }
             })
-            
+
     }
 
     return {

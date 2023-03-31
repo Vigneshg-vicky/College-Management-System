@@ -7,11 +7,11 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useAddStudentMutation, useGetDepartmentQuery } from '../Redux/Features/Api/apiSlice';
-import { FormTablePayload } from '../Types/payloadInterface';
+import { useAddStudentMutation, useGetDepartmentQuery } from '../../Redux/Features/Api/apiSlice';
+import { FormTablePayload } from '../../Types/payloadInterface';
 import { toast } from 'react-toastify';
-import { setDepartmentInterface, setGenderInterface } from '../Types/VariableInterface';
-import { convertDate } from '../HelperFunctions/dateConverter';
+import { setDepartmentInterface, setGenderInterface } from '../../Types/VariableInterface';
+import { convertDate } from '../../HelperFunctions/dateConverter';
 // import yupre
 
 const FormSchema = yup.object().shape({
@@ -62,7 +62,9 @@ const FormTable = () => {
             }
         } catch (error: any) {
             console.log(error)
-            setError(error.data.message)
+            if (error.data.message.split(' ')[0] === 'E11000') {
+                setError('Student with this email already exists!')
+            }
         }
     }
 
@@ -84,14 +86,14 @@ const FormTable = () => {
                     <div className='pl-5  col-6'>
                         <label htmlFor="name" className="block text-900 font-medium mb-2">name</label>
                         <InputText id="name" type="text" placeholder="Student Name " className="w-5 mb-3" {...register("name")} />
-                        <small className="authErrors">
+                        <small className="authErrors" style={{ color: 'red' }}> <br />
                             {errors.name?.message}
                         </small>
                     </div>
                     <div className='pl-5 col-6'>
                         <label htmlFor="email" className="block text-900 font-medium mb-2">Email</label>
                         <InputText id="email" type="text" placeholder="Student Name " className="w-5 mb-3" {...register("email")} />
-                        <small className="authErrors">
+                        <small className="authErrors" style={{ color: 'red' }}><br />
                             {errors.email?.message}
                         </small>
                     </div>
@@ -102,7 +104,7 @@ const FormTable = () => {
                         {selectedDepartment ?
                             ""
                             :
-                            <small className="authErrors">
+                            <small className="authErrors" style={{ color: 'red' }}>
                                 Select a department!
                             </small>}
                     </div>
@@ -121,7 +123,9 @@ const FormTable = () => {
                     <div className='w-full align-items-center left-6 ml-8'>
                         <Button type='submit' label="Sign In" icon="pi pi-user" className="w-6 m-5 bg-white text-primary" />
                     </div>
-                    <label htmlFor="authError text-center" style={{color:'red'}}>{Error}</label>
+                    <div className='text-center ml-8'>
+                        <label htmlFor="authError" className='text-center' style={{ color: 'red' }}>{Error}</label>
+                    </div>
                 </div>
             </form>
         </div>

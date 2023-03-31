@@ -12,9 +12,8 @@ export const FacultyRepositoryMongoDb = () => {
             {
                 name: FacultyInfo.name,
                 email: FacultyInfo.email,
-                department:FacultyInfo.department,
-                designation:FacultyInfo.designation,
-                contact:FacultyInfo.contact
+                department: FacultyInfo.department,
+                designation: FacultyInfo.designation,
             }
         )
     }

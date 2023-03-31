@@ -34,5 +34,5 @@ export interface SubjectInterface {
     name: string,
     code: string,
     department: string,
-    totalLecture: number,
+    total: number,
 }

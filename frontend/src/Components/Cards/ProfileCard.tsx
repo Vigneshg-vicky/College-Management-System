@@ -1,11 +1,12 @@
-
-import React from 'react'; 
+import React from 'react';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 
-export default function ProfileCard() {
+
+export default function ProfileCard({ url }: { url: string }) {
+
     const header = (
-        <img alt="Card" src="https://primefaces.org/cdn/primereact/images/usercard.png" />
+        <img alt="Card" src={ url ?? "https://primefaces.org/cdn/primereact/images/usercard.png" } />
     );
     const footer = (
         <div className="flex flex-wrap justify-content-end gap-2">
@@ -15,12 +16,11 @@ export default function ProfileCard() {
 
     return (
         <div className="card flex justify-content-center">
-            <Card title="Title" subTitle="Subtitle" footer={footer} header={header} className="md:w-25rem">
+            <Card footer={footer} header={header} className="md:w-25rem">
                 <p className="m-0">
-                    Hi Im Vicky
+                    Vignesh G
                 </p>
             </Card>
         </div>
     )
 }
-        

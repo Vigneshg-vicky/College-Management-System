@@ -9,8 +9,8 @@ const DepartmentSchema = new Schema(
         },
         Subjects: [
             {
-                subjectCode: { type: Number, required: [true, 'Enter the subject Code'] },
-                subjectName: { type: String, required: [true, 'Enter the subject Name'] },
+                subjectCode: { type: String, required: [true, 'Enter the subject Code'], unique: true },
+                subjectName: { type: String, required: [true, 'Enter the subject Name'], unique: true },
                 totalLecture: { type: Number, required: [true, 'Enter the Number of lectures'] },
 
             }],

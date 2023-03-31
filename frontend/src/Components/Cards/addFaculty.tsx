@@ -18,16 +18,21 @@ const schema = yup.object().shape({
 
 const AddFaculty = () => {
     const { data } = useGetDepartmentQuery();
-    const [error, setError] = useState('')
+    console.log(data)
+    const [Error, setError] = useState('')
     const [SelectedDepartment, setSelectedDepartment] = useState<setDepartmentInterface>()
     const [Designation, setDesignation] = useState<DesignationInterface>()
-    const [AddFaculty] = useAddFacultyMutation();
-    const submitHandler = async (data: any) => {
+    const [addFaculty] = useAddFacultyMutation();
+    const { register, handleSubmit, formState: { errors } } = useForm<FacultyformPayload>({
+        resolver: yupResolver(schema)
+    })
+    const submitHandler = async (data: FacultyformPayload) => {
         try {
+
+            console.log(data)
             data.department = SelectedDepartment?._id;
             data.designation = Designation?.name;
-            console.log(data)
-            const res = await AddFaculty(data).unwrap();
+            const res = await addFaculty(data).unwrap();
             if (res.status === 'success') {
                 toast('Faculty Added!')
             }
@@ -41,14 +46,10 @@ const AddFaculty = () => {
         }
     }
 
-    const { register, handleSubmit, formState: { errors } } = useForm<FacultyformPayload>({
-        resolver: yupResolver(schema)
-    })
 
     const designation = [
         { name: 'HOD' }
     ]
-
     return (
         <div className='box bg-primary text-center'>
             <h3>Faculty Details</h3>
@@ -71,15 +72,13 @@ const AddFaculty = () => {
                     </div>
                     <div className='input col-6'>
                         <label htmlFor="department" className="block font-medium">Designation</label>
-                        <Dropdown value={Designation} placeholder="Select Department" onChange={(e) => setDesignation(e.value)} options={designation} optionLabel='name' />
-                    </div>
-                    <div className='text-center'>
+                        <Dropdown value={Designation} placeholder="Select Designation" onChange={(e) => setDesignation(e.value)} options={designation} optionLabel='name' />
                     </div>
                     <div className='input col-6'>
-                        <Button type='submit' label="Sign In" className="w-6 m-5 bg-white text-primary" />
+                        <Button type='submit' label="Add Faculty" className="w-6 m-5 bg-white text-primary" />
                     </div>
                 </div>
-                        <label className='text-center' style={{color:'red'}} htmlFor="">{error}</label>   
+                <label className='text-center' style={{ color: 'red' }} htmlFor="">{Error}</label>
             </form>
         </div>
     )

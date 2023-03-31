@@ -6,6 +6,15 @@ export interface adminLoginPayload {
 export interface FacultyformPayload {
     email:string,
     name:string,
+    department?:string,
+    designation?:string,
+}
+
+export interface SubjectFormPayload {
+    name:string,
+    code:number,
+    total:number,
+    department?:string,
 }
 
 export interface FormTablePayload {

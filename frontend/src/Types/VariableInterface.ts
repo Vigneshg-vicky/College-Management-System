@@ -1,6 +1,6 @@
 export interface setDepartmentInterface {
-    _id:string,
-    department:string,
+    _id?:string,
+    department?:string,
 
 }
 export interface setGenderInterface {

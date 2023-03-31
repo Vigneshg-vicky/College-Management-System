@@ -11,9 +11,9 @@ import errorHandlingMiddleware from './frameworks/webserver/middlewares/errorHan
 import AppError from './utils/appError'
 import serverConfig from './frameworks/webserver/server'
 import cors from 'cors'
+import helmet from 'helmet'
 
 // colors.enable()
-
 
 dotenv.config({ path: 'config.env' })
 
@@ -22,6 +22,7 @@ const app: Application = express();
 
 app.use(cors());
 
+app.use(helmet())   
 
 //-----Database Connection-----//
 
@@ -46,7 +47,7 @@ app.use(errorHandlingMiddleware);
 // catch 404 and forward to error handler
 
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
-    next(new AppError('Not found',404))
+    next(new AppError('Not found', 404))
 });
 
 serverConfig(app).startServer();

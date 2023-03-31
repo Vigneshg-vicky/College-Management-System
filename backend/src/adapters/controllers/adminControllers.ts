@@ -85,26 +85,29 @@ const AdminController = (departmentDbRepository: DepartmentDbInterface,
         })
     })
 
-    const AdminHomeData = asyncHandler(async (req: Request, res: Response) => {
+    const AdminHomeData = asyncHandler(async (req: any, res: Response) => {
+        const adminId = req.admin;
+        const adminData = await dbRepositoryAdmin.getAdminById(adminId);
         const departments = await DbRepositoryDepartment.TotalDepartment();
         const students = await dbRepositoryStudent.getAllStudentsCount();
         const faculty = await dbFacultyRepository.TotalFaculty();
 
-        console.log(departments, students, faculty)
+        console.log(departments, students, faculty, adminData)
 
         res.json({
             status: 'success',
             message: 'data fetched',
             departments,
             students,
+            adminData,
             faculty
         })
 
     })
 
     const addFaculty = asyncHandler(async (req: Request, res: Response) => {
-        const { name, email, designation, department, contact } = req.body;
-        const facultyData: AddFacultyInterface = { name, email, designation, department, contact };
+        const { name, email, designation, department } = req.body;
+        const facultyData: AddFacultyInterface = { name, email, designation, department };
         const FacultyAdd = await dbFacultyRepository.addFaculty(facultyData);
         res.json({
             status: 'success',
@@ -114,13 +117,24 @@ const AdminController = (departmentDbRepository: DepartmentDbInterface,
     })
 
     const addSubject = asyncHandler(async (req: Request, res: Response) => {
-        const { name, code, department, totalLecture } = req.body;
-        const SubjectInfo: SubjectInterface = { name, code, department, totalLecture };
+        const { name, code, department, total } = req.body;
+        const SubjectInfo: SubjectInterface = { name, code, department, total };
         await DbRepositoryDepartment.addSubject(SubjectInfo)
 
         res.json({
             status: 'success',
             message: 'subject added!',
+        })
+    })
+
+    const getStudentsWithDept = asyncHandler(async (req: Request, res: Response) => {
+        const deptId: string = req.params.id;
+        const students = await dbRepositoryStudent.getStudentWithDept(deptId)
+        console.log('this is students data with dept', students)
+        res.json({
+            status: 'success',
+            message: 'data fetched',
+            students,
         })
     })
 
@@ -132,6 +146,7 @@ const AdminController = (departmentDbRepository: DepartmentDbInterface,
         AdminHomeData,
         addFaculty,
         addSubject,
+        getStudentsWithDept
     }
 }
 

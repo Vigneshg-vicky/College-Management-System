@@ -1,4 +1,4 @@
-import AdminInterface from "../../../../types/adminInterface";
+import AdminInterface, { AdminDataInterface } from "../../../../types/adminInterface";
 import Admin from "../models/adminModel";
 
 export const AdminRepositoryMongoDB = () => {
@@ -8,8 +8,16 @@ export const AdminRepositoryMongoDB = () => {
         return admin;
     }
 
+    const getAdminById = async (id: string) => {
+        console.log(id, 'reached query and this is the id');
+        const admin: AdminDataInterface | null = await Admin.findById(id).select('-password');
+        console.log(admin, 'this is admin data')
+        return admin;
+    }
+
     return {
-        getAdminByEmail
+        getAdminByEmail,
+        getAdminById,
     }
 }
 

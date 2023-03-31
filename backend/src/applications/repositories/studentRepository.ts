@@ -7,6 +7,7 @@ export const StudentRepository = (repository: ReturnType<studentRepositoryMongoD
     const getStudent = async (Reg_No: string) => await repository.getStudent(Reg_No);
     const getStudentByEmail = async (email: string) => await repository.getStudentByEmail(email)
     const getAllStudentsCount = async () => await repository.getAllStudentsCount()
+    const getStudentWithDept = async (deptId: string) => await repository.getStudentWithDept(deptId)
 
     return {
         addStudent,
@@ -14,6 +15,7 @@ export const StudentRepository = (repository: ReturnType<studentRepositoryMongoD
         getStudent,
         getStudentByEmail,
         getAllStudentsCount,
+        getStudentWithDept,
     }
 
 }

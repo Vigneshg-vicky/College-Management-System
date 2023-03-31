@@ -2,9 +2,11 @@ import { AdminRepositoryMongoDBReturn } from "../../frameworks/database/mongoDB/
 
 export const adminDbRepository = (repository: AdminRepositoryMongoDBReturn) => {
     const getAdminByEmail = async (email: string) => await repository.getAdminByEmail(email)
+    const getAdminById = async (id:string) => await repository.getAdminById(id);
 
     return {
         getAdminByEmail,
+        getAdminById,
     }
 
 }

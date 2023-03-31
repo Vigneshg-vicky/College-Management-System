@@ -36,8 +36,8 @@ const authController = (adminDbRepository: AdminDbInterface,
     })
 
     const LoginStudent = asyncHandler(async (req: Request, res: Response) => {
-        const { email, password }: { email: string, password: string } = req.body;
-        const token = await StudentLogin(email, password, dbRepositoryStudent, authService)
+        const { email, reg_no }: { email: string, reg_no: string } = req.body;
+        const token = await StudentLogin(email, reg_no, dbRepositoryStudent, authService)
         res.json({
             status: 'success',
             message: 'Student verified',

@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Root } from "react-dom/client";
 import { RootState } from "../../app/store";
 
 const data = localStorage.getItem('studentToken') ?? '';
