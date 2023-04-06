@@ -121,7 +121,7 @@ const FormTable = () => {
                         <Dropdown value={selectedGender} options={gender} optionLabel="gender" placeholder="select gender" onChange={(e) => setSelectedGender(e.value)} />
                     </div>
                     <div className='w-full align-items-center left-6 ml-8'>
-                        <Button type='submit' label="Sign In" icon="pi pi-user" className="w-6 m-5 bg-white text-primary" />
+                        <Button type='submit' label="Add Student" icon="pi pi-user" className="w-6 m-5 bg-white text-primary" />
                     </div>
                     <div className='text-center ml-8'>
                         <label htmlFor="authError" className='text-center' style={{ color: 'red' }}>{Error}</label>

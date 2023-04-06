@@ -9,7 +9,7 @@ import { deleteStudentToken } from '../../Redux/Features/Reducers/studentAuthSli
 
 
 
-function NavBar() {
+const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -30,13 +30,13 @@ function NavBar() {
   return (
     <div>
       <AppBar position="static">
-        <Toolbar className='flex justify-content-center align-items-evenly'>
+        <Toolbar className='flex justify-content-center align-items-evenly h-1rem'>
           <img src="/path/to/logo.png" alt="Logo" className='logo' />
           <div className='center'>
-            <Button component={Link} to="/" color="inherit">Home</Button>
-            <Button component={Link} to="/about" color="inherit">Dashboard</Button>
-            <Button component={Link} to="/services" color="inherit">Attendance</Button>
-            <Button component={Link} to="/contact" color="inherit">Test Marks</Button>
+            <Button component={Link} to="/student/home" color="inherit">Home</Button>
+            <Button component={Link} to="/student/profile" color="inherit">Dashboard</Button>
+            <Button component={Link} to="/student/attendance" color="inherit">Attendance</Button>
+            <Button component={Link} to="/student/marks" color="inherit">Test Marks</Button>
             <Button component={Link} to="/blog" color="inherit">Exams</Button>
             <Button component={Link} to="/blog" color="inherit">Exams</Button>
             <Button component={Link} to="/blog" color="inherit">Exams</Button>

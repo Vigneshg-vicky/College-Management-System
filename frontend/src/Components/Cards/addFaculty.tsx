@@ -18,7 +18,6 @@ const schema = yup.object().shape({
 
 const AddFaculty = () => {
     const { data } = useGetDepartmentQuery();
-    console.log(data)
     const [Error, setError] = useState('')
     const [SelectedDepartment, setSelectedDepartment] = useState<setDepartmentInterface>()
     const [Designation, setDesignation] = useState<DesignationInterface>()
@@ -28,8 +27,6 @@ const AddFaculty = () => {
     })
     const submitHandler = async (data: FacultyformPayload) => {
         try {
-
-            console.log(data)
             data.department = SelectedDepartment?._id;
             data.designation = Designation?.name;
             const res = await addFaculty(data).unwrap();
@@ -37,10 +34,8 @@ const AddFaculty = () => {
                 toast('Faculty Added!')
             }
         } catch (error: any) {
-            console.log(error)
             setError(error)
             if (error.data.message.split(' ')[0] == 'E11000') {
-                console.log('hai this is same email')
                 setError('Email already used!')
             }
         }

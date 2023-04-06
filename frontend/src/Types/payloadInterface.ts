@@ -43,3 +43,10 @@ export interface FacultyLoginPayload {
     password: string,
 }
 
+export interface StudentPayload {
+    name:string,
+    email:string,
+    mobile:string,
+    nationality:string
+}
+

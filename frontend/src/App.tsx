@@ -26,6 +26,8 @@ import Home from './Pages/Student/Home';
 import FacultyHome from './Pages/Faculty/facultyHome';
 import OurFaculties from './Pages/Admin/OurFaculties';
 import OurStudents from './Pages/Admin/OurStudents';
+import ProfilePage from './Pages/Student/ProfilePage';
+import StudentRoutes from './Routes/StudentRoutes';
 
 export function LoadingSpinner() {
   return (
@@ -62,7 +64,13 @@ function App() {
         <Route path="/" element={<Navigate to="/student/login" />} />
 
         {/* Protected Student Routes */}
-        <Route path='/student/home' element={<Home />} />
+
+        <Route path="/student/*" element={<StudentRoutes />} />
+
+        {/* <Route path='/student/home' element={<Home />} />
+          <Route path='/student/profile' element={<ProfilePage />} /> */}
+
+
         <Route path='/faculty/home' element={<FacultyHome />} />
 
 

@@ -9,6 +9,12 @@ export interface IBasicResponse {
     message: string,
 }
 
+export interface IStudentResponse {
+    status: string,
+    message: string,
+    student?: {}
+}
+
 export interface IDepartmentResponse {
     status: string,
     message: string,

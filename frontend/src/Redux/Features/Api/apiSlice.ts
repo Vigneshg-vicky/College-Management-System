@@ -83,14 +83,26 @@ export const apiSlice = createApi({
 
         facultyLogin: builder.mutation({
             query: (data) => ({
-                url: '/faculty/login',
+                url: '/auth/faculty-login',
                 method: 'POST',
                 body: data,
             })
         }),
+        EditStudent: builder.mutation({
+            query: (data) => ({
+                url: '/student/edit-student',
+                method: 'PATCH',
+                body: data,
+            })
+        }),
+
         getStudentWithDept: builder.query({
             query: (data) => `/admin/students/${data._id}`,
             providesTags: ['admin', 'student'],
+        }),
+        getStudentData: builder.query<IStudentResponse, void>({
+            query: () => '/student/details',
+            providesTags: ['student'],
         })
 
 
@@ -109,5 +121,7 @@ export const {
     useFacultyLoginMutation,
     useStudentLoginMutation,
     useGetStudentWithDeptQuery,
+    useGetStudentDataQuery,
+    useEditStudentMutation,
 
 } = apiSlice;

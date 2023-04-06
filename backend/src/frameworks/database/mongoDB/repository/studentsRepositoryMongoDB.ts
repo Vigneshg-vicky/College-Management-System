@@ -24,10 +24,15 @@ export const studentRepositoryMongoDB = () => {
                 email: studentInfo.email,
                 department: studentInfo.department,
                 Joining_Year: studentInfo.year,
-                registration_No: studentInfo.registration_No,
+                registration_No: studentInfo.Reg_No,
                 Contact_No: studentInfo.contact_No,
             }
         })
+    }
+
+    const getStudentById = async (id: string) => {
+        const data = await Student.findById(id)
+        return data;
     }
 
     const getStudent = async (Reg_No: string) => {
@@ -59,6 +64,7 @@ export const studentRepositoryMongoDB = () => {
         getStudentByEmail,
         getAllStudentsCount,
         getStudentWithDept,
+        getStudentById,
     }
 }
 

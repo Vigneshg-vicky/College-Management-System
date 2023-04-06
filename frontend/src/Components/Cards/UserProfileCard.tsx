@@ -7,9 +7,10 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 
 
+
 export default function ActionAreaCard() {
 
-    const handleFileUpload = (event) => {
+    const handleFileUpload = (event: any) => {
         const files = event.target.files;
         console.log(files);
         console.log('this is the file')

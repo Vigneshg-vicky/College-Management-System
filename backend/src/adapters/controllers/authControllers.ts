@@ -41,13 +41,15 @@ const authController = (adminDbRepository: AdminDbInterface,
         res.json({
             status: 'success',
             message: 'Student verified',
-            token
+            token,
         })
     })
 
     const LoginFaculty = asyncHandler(async (req: Request, res: Response) => {
         const { email, password }: { email: string, password: string } = req.body;
+        console.log('data has reached here')
         const token = await FacultyLogin(email, password, dbRepositoryFaculty, authService);
+        console.log('token is here',token)
         res.json(
             {
                 status: 'success',

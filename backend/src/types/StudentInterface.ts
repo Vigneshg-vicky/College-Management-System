@@ -24,6 +24,8 @@ export interface EditStudentInterface {
     name?: string,
     Reg_No?: string,
     email?: string,
+    dob?: string,
+    nationality?:string,
     department?: string,
     year?: Date,
     registration_No?: string,
