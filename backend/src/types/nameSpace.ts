@@ -7,6 +7,7 @@ declare global {
         interface Request {
             admin?:any;
             student?:any;
+            faculty?:any;
             
         }
     }

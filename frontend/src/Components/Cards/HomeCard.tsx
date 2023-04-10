@@ -34,18 +34,6 @@ const FormCard = () => {
             route: '/student/attendance',
             color: 'blue'
         },
-        // {
-        //     title: 'Card 5',
-        //     image: 'https://picsum.photos/id/241/200/300',
-        //     route: '/card5',
-        //     color: 'blue'
-        // },
-        // {
-        //     title: 'Card 6',
-        //     image: 'https://picsum.photos/id/242/200/300',
-        //     route: '/card6',
-        //     color: 'blue'
-        // },
     ];
 
     const handleCardClick = (route: any) => {

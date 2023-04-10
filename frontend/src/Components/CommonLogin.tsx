@@ -18,7 +18,7 @@ interface UseFormInterface {
 }
 
 
-const StudentLogin = () => {
+const StudentAndFacultyLogin = () => {
   const navigate = useNavigate()
   const [student, setStudent] = useState(false)
   const [error, setError] = useState('')
@@ -55,7 +55,7 @@ const StudentLogin = () => {
       else if (student) {
         console.log('this is faculty')
         const res = await FacultyLogin(data).unwrap();
-        console.log(res)
+        console.log(res,'here is the token')
         if (res.status === 'success') {
           dispatch(setFacultyToken(res));
           navigate('/faculty/home')
@@ -145,4 +145,4 @@ const StudentLogin = () => {
   )
 }
 
-export default StudentLogin;
+export default StudentAndFacultyLogin;

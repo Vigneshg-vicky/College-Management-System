@@ -10,7 +10,7 @@ export const FacultyLogin = async (
     AuthService: ReturnType<AuthServiceInterface>,
 
 ) => {
-    const faculty = await FacultyRepository.getFacultyByEmail(email)
+    const faculty = await (await FacultyRepository).getFacultyByEmail(email)
     if (!faculty) {
         throw new AppError('Faculty doesnt exist', HttpStatus.UNAUTHORIZED)
     }

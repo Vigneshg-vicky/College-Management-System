@@ -42,7 +42,7 @@ const AdminController = (departmentDbRepository: DepartmentDbInterface,
 
     const AddDepartment = asyncHandler(async (req: Request, res: Response) => {
         const { department }: { department: string } = req.body;
-        const Added = await addDepartment(department, DbRepositoryDepartment)
+        const Added:any = await addDepartment(department, DbRepositoryDepartment)
 
         res.json({
             status: 'success',
@@ -90,7 +90,7 @@ const AdminController = (departmentDbRepository: DepartmentDbInterface,
         const adminData = await dbRepositoryAdmin.getAdminById(adminId);
         const departments = await DbRepositoryDepartment.TotalDepartment();
         const students = await dbRepositoryStudent.getAllStudentsCount();
-        const faculty = await dbFacultyRepository.TotalFaculty();
+        const faculty = await (await dbFacultyRepository).TotalFaculty();
 
         console.log(departments, students, faculty, adminData)
 
@@ -108,7 +108,7 @@ const AdminController = (departmentDbRepository: DepartmentDbInterface,
     const addFaculty = asyncHandler(async (req: Request, res: Response) => {
         const { name, email, designation, department } = req.body;
         const facultyData: AddFacultyInterface = { name, email, designation, department };
-        const FacultyAdd = await dbFacultyRepository.addFaculty(facultyData);
+        const FacultyAdd = await (await dbFacultyRepository).addFaculty(facultyData);
         res.json({
             status: 'success',
             message: 'faculty added',

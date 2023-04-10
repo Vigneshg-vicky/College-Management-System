@@ -20,5 +20,8 @@ export interface AddFacultyInterface {
 }
 
 export interface EditFacultyInterface {
-
+    name: string,
+    email: string,
+    url?: string,
+    number: string,
 }

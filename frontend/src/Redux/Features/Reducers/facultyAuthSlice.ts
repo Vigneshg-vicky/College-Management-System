@@ -18,7 +18,7 @@ const facultyAuthSlice = createSlice({
             localStorage.setItem(
                 'facultyToken',
                 JSON.stringify({
-                    token: state.data.token,
+                    token: action.payload.token,
                 })
             )
             state.data = { token: action.payload.token }
@@ -33,6 +33,6 @@ const facultyAuthSlice = createSlice({
     }
 })
 
-export const {setFacultyToken,deleteFacultyToken} = facultyAuthSlice.actions;
-export const selectFacultyAuth = (state:RootState) => state.facultyAuth.data;
+export const { setFacultyToken, deleteFacultyToken } = facultyAuthSlice.actions;
+export const selectFacultyAuth = (state: RootState) => state.facultyAuth.data;
 export const facultyAuthReducer = facultyAuthSlice.reducer;

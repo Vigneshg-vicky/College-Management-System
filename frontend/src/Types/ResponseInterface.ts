@@ -12,7 +12,10 @@ export interface IBasicResponse {
 export interface IStudentResponse {
     status: string,
     message: string,
-    student?: {}
+    isLoading:any,
+    isError:any,
+    isSuccess:any
+    data:{students:any}
 }
 
 export interface IDepartmentResponse {

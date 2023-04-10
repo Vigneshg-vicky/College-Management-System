@@ -1,17 +1,14 @@
-import ActionAreaCard from '../../Components/Cards/UserProfileCard'
-import AccessibleTable from '../../Components/Tables/StudentTable'
-import FacultyNavbar from '../../Components/MUI/FacultyNavBar'
+import FacultyGrid from '../../Components/Cards/FacultyCard'
 
 const FacultyHome = () => {
   return (
     <>
-      <FacultyNavbar />
-      <div className="container h-screen flex justify-content-evenly p-5">
-        <ActionAreaCard />
-        <div className="contains" style={{ maxWidth: '950' }}>
-          <AccessibleTable />
+      <div className="containers flex">
+        <div className="box p-8 m-5" style={{ width: '65%' }}>
+          <FacultyGrid />
         </div>
       </div>
+
     </>
   )
 }

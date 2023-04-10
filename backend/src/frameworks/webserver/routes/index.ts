@@ -10,7 +10,7 @@ const routes = (app: Application, redisClient: redisClient) => {
 
     app.use('/api/admin', adminRouter());
     app.use('/api/student', studentRouter(redisClient));
-    app.use('api/faculty', facultyRouter(redisClient));
+    app.use('/api/faculty', facultyRouter(redisClient));
     app.use('/api/auth', authRouter());
 }
 

@@ -20,8 +20,14 @@ const FacultySchema = new Schema(
             required: [true, 'Select the designation'],
             unique: [true, 'department should be unique!'],
         },
-        password:{
-            type:String,
+        password: {
+            type: String,
+        },
+        url: {
+            type: String,
+        },
+        phone: {
+            type: Number,
         }
     },
     {

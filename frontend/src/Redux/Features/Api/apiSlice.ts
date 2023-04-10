@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { adminLoginPayload, departmentPayload, FormTablePayload } from '../../../Types/payloadInterface';
-import { ILoginResponse, IBasicResponse, IDepartmentResponse, IAdminResponse } from '../../../Types/ResponseInterface';
+import { ILoginResponse, IBasicResponse, IDepartmentResponse, IAdminResponse, IStudentResponse } from '../../../Types/ResponseInterface';
 
 const baseUrl = "http://localhost:8000/api"
 
@@ -57,14 +57,16 @@ export const apiSlice = createApi({
                 url: '/admin/add-student',
                 method: 'POST',
                 body: data
-            })
+            }),
+            invalidatesTags: ['admin', 'student'],
         }),
         addFaculty: builder.mutation({
             query: (data) => ({
                 url: '/admin/add-faculty',
                 method: 'POST',
                 body: data,
-            })
+            }),
+            invalidatesTags: ['admin','faculty'],
         }),
         addSubject: builder.mutation({
             query: (data) => ({
@@ -86,7 +88,8 @@ export const apiSlice = createApi({
                 url: '/auth/faculty-login',
                 method: 'POST',
                 body: data,
-            })
+            }),
+            invalidatesTags:['faculty']
         }),
         EditStudent: builder.mutation({
             query: (data) => ({
@@ -100,10 +103,23 @@ export const apiSlice = createApi({
             query: (data) => `/admin/students/${data._id}`,
             providesTags: ['admin', 'student'],
         }),
-        getStudentData: builder.query<IStudentResponse, void>({
+        getStudentData: builder.query<any, void>({
             query: () => '/student/details',
             providesTags: ['student'],
+        }),
+        EditFaculty: builder.mutation({
+            query: (data) => ({
+                url: '/faculty/edit',
+                method: 'POST',
+                body: data,
+            }),
+            invalidatesTags:['faculty'],
+        }),
+        GetFaculty:builder.query<IStudentResponse, void>({
+            query:() => '/faculty/details',
+            providesTags:['faculty']
         })
+
 
 
 
@@ -123,5 +139,7 @@ export const {
     useGetStudentWithDeptQuery,
     useGetStudentDataQuery,
     useEditStudentMutation,
+    useEditFacultyMutation,
+    useGetFacultyQuery,
 
 } = apiSlice;

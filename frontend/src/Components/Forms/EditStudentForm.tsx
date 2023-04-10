@@ -33,7 +33,7 @@ const schema = yup.object().shape({
     mobile: yup.number().required('required field').typeError('Only numbers allowed'),
 })
 
-const EditStudentForm = (props: any) => {
+const EditStudentForm = ({ data, modal, setModal }: { data: any, modal: any, setModal: any }) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm<StudentPayload>({
         resolver: yupResolver(schema)
@@ -42,10 +42,10 @@ const EditStudentForm = (props: any) => {
     const [editStudent] = useEditStudentMutation();
 
     const classes = useStyles();
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [nationality, setNationality] = useState('');
-    const [mobileNumber, setMobileNumber] = useState('');
+    const [name, setName] = useState(data?.student?.name);
+    const [email, setEmail] = useState(data?.student?.email);
+    const [nationality, setNationality] = useState('Indian');
+    const [mobileNumber, setMobileNumber] = useState(data?.student?.Contact_No);
     const [dob, setDob] = useState('');
 
     const SubmitHandler = async (data: any) => {
@@ -62,7 +62,7 @@ const EditStudentForm = (props: any) => {
         <form className={classes.form} onSubmit={handleSubmit(SubmitHandler)}>
             <TextField
                 label="Name"
-                value={props.student?.name}
+                value={name}
                 // onChange={(event) => setName(event.target.value)}
                 {...register('name')}
             />
@@ -70,14 +70,14 @@ const EditStudentForm = (props: any) => {
             <TextField
                 label="Email"
                 type="email"
-                value={props.student?.email}
+                value={email}
                 // onChange={(event) => setEmail(event.target.value)}
                 {...register('email')}
             />
             <label htmlFor="authError" style={{ color: 'red' }}>{errors.email?.message}</label>
             <TextField
                 label="Nationality"
-
+                value={nationality}
                 // onChange={(event) => setNationality(event.target.value)}
                 {...register('nationality')}
             />
@@ -85,7 +85,7 @@ const EditStudentForm = (props: any) => {
             <TextField
                 label="Mobile Number"
                 type='tel'
-                value={props.student?.Contact_No}
+                value={mobileNumber}
                 // onChange={(event) => setMobileNumber(event.target.value)}
                 {...register('mobile')}
             />
@@ -93,14 +93,14 @@ const EditStudentForm = (props: any) => {
             <TextField
                 label="Date of Birth"
                 type="date"
-                value={dob}
+                value={data?.student?.Joining_Year}
                 onChange={(event) => setDob(event.target.value)}
                 InputLabelProps={{
                     shrink: true,
                 }}
             />
             <Box className={classes.buttonContainer}>
-                <Button onClick={() => props.setModal(false)} variant="contained" color="error" type="button">
+                <Button onClick={() => setModal(false)} variant="contained" color="error" type="button">
                     Cancel
                 </Button>
                 <Button variant="contained" color="primary" type="submit">
