@@ -37,11 +37,11 @@ const NavBar = () => {
             <Button component={Link} to="/student/profile" color="inherit">Dashboard</Button>
             <Button component={Link} to="/student/attendance" color="inherit">Attendance</Button>
             <Button component={Link} to="/student/marks" color="inherit">Test Marks</Button>
-            <Button component={Link} to="/blog" color="inherit">Exams</Button>
-            <Button component={Link} to="/blog" color="inherit">Exams</Button>
-            <Button component={Link} to="/blog" color="inherit">Exams</Button>
-            <Button component={Link} to="/blog" color="inherit">Exams</Button>
-            <Button component={Link} to="/blog" color="inherit">Exams</Button>
+            <Button component={Link} to="/student/exams" color="inherit">Exams</Button>
+            <Button component={Link} to="/blog" color="inherit">abcd</Button>
+            <Button component={Link} to="/blog" color="inherit">abcd</Button>
+            <Button component={Link} to="/blog" color="inherit">abcd</Button>
+            <Button component={Link} to="/blog" color="inherit">abcd</Button>
           </div>
           <div className='right'>
             <IconButton

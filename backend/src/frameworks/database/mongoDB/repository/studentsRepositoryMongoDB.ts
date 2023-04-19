@@ -18,16 +18,25 @@ export const studentRepositoryMongoDB = () => {
         )
 
     const editStudent = async (studentId: string, studentInfo: EditStudentInterface) => {
-        await Student.updateOne({ _id: studentId }, {
-            $push: {
+        console.log('inside the repository this is data', studentInfo)
+        console.log('inside the repository this is studentID', studentId)
+        return await Student.updateOne({ _id: studentId }, {
+            $set: {
                 name: studentInfo.name,
                 email: studentInfo.email,
                 department: studentInfo.department,
                 Joining_Year: studentInfo.year,
                 registration_No: studentInfo.Reg_No,
                 Contact_No: studentInfo.contact_No,
+                nationality: studentInfo.nationality,
             }
         })
+
+    }
+
+    const uploadFile = async (id: string, url: string) => {
+        console.log('these are the data', id, url)  
+        return await Student.findByIdAndUpdate({ _id: id }, { url: url })
     }
 
     const getStudentById = async (id: string) => {
@@ -65,6 +74,7 @@ export const studentRepositoryMongoDB = () => {
         getAllStudentsCount,
         getStudentWithDept,
         getStudentById,
+        uploadFile,
     }
 }
 

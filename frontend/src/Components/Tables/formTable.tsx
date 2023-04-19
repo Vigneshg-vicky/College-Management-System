@@ -85,21 +85,21 @@ const FormTable = () => {
                 <div className='grid w-full justify-content-between pl-8 mx-5 text-900'>
                     <div className='pl-5  col-6'>
                         <label htmlFor="name" className="block text-900 font-medium mb-2">name</label>
-                        <InputText id="name" type="text" placeholder="Student Name " className="w-5 mb-3" {...register("name")} />
+                        <InputText id="name" type="text" placeholder="Student Name " className="mb-3" {...register("name")} />
                         <small className="authErrors" style={{ color: 'red' }}> <br />
                             {errors.name?.message}
                         </small>
                     </div>
                     <div className='pl-5 col-6'>
                         <label htmlFor="email" className="block text-900 font-medium mb-2">Email</label>
-                        <InputText id="email" type="text" placeholder="Student Name " className="w-5 mb-3" {...register("email")} />
+                        <InputText id="email" type="text" placeholder="Student Name " className=" mb-3" {...register("email")} />
                         <small className="authErrors" style={{ color: 'red' }}><br />
                             {errors.email?.message}
                         </small>
                     </div>
                     <div className='pl-5 col-6'>
                         <label htmlFor="department" className="block text-900 font-medium mb-2">Department</label>
-                        <Dropdown value={selectedDepartment} placeholder="Select Department" onChange={(e) => setSelectedDepartment(e.value)} options={data?.Departments} optionLabel='department' />
+                        <Dropdown style={{width:'13rem'}} value={selectedDepartment} placeholder="Select Department" onChange={(e) => setSelectedDepartment(e.value)} options={data?.Departments} optionLabel='department' />
                         <br />
                         {selectedDepartment ?
                             ""
@@ -110,15 +110,15 @@ const FormTable = () => {
                     </div>
                     <div className='pl-5 col-6'>
                         <label htmlFor="date" className="block text-900 font-medium mb-2">Joining Date</label>
-                        <InputText id="date" type="date" placeholder="Student Name " className="w-5 mb-3" {...register("date")} />
+                        <InputText style={{width:'13rem'}} id="date" type="date" placeholder="Student Name " className="mb-3" {...register("date")} />
                     </div>
                     <div className='pl-5 col-6'>
                         <label htmlFor="number" className="block text-900 font-medium mb-2">Contact Number</label>
-                        <InputText id="number" type="number" placeholder="Student Name " className="w-5 mb-3" {...register("contact_no")} />
+                        <InputText id="number" type="number" placeholder="Student Name " className=" mb-3" {...register("contact_no")} />
                     </div>
                     <div className='pl-5 col-6'>
                         <label htmlFor="gender" className="block text-900 font-medium mb-2">Gender</label>
-                        <Dropdown value={selectedGender} options={gender} optionLabel="gender" placeholder="select gender" onChange={(e) => setSelectedGender(e.value)} />
+                        <Dropdown style={{width:'13rem'}} value={selectedGender} options={gender} optionLabel="gender" placeholder="select gender" onChange={(e) => setSelectedGender(e.value)} />
                     </div>
                     <div className='w-full align-items-center left-6 ml-8'>
                         <Button type='submit' label="Add Student" icon="pi pi-user" className="w-6 m-5 bg-white text-primary" />

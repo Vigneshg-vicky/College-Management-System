@@ -9,21 +9,23 @@ import StudentModal from '../../Components/Modals/EditModal';
 import { useEffect, useState } from 'react';
 import { useGetStudentDataQuery } from '../../Redux/Features/Api/apiSlice';
 import { IStudentResponse } from '../../Types/ResponseInterface';
+import UploadImage from '../../Components/Forms/UploadImage';
 
 const ProfilePage = () => {
 
     const { data, isLoading, isSuccess, isError } = useGetStudentDataQuery<any>();
     console.log(data)
     useEffect(() => {
-      if(isLoading) {
-        console.log('data is loading')
-      }else if(isSuccess) {
-        console.log('data fetched',data)
-      }
+        if (isLoading) {
+            console.log('data is loading')
+        } else if (isSuccess) {
+            console.log('data fetched', data)
+        }
     }, [data])
-    
+
 
     const [modal, setModal] = useState(false)
+    const [uploadModal, setUploadModal] = useState(false)
 
     return (
         <>
@@ -35,8 +37,11 @@ const ProfilePage = () => {
                             <img className='border-3 border-500' src={data?.student?.url ?? "https://media.istockphoto.com/id/1327585822/vector/attendance-presence.jpg?s=612x612&w=0&k=20&c=aDQ60NAjMx3XsqM7hnZpf1RVqxjlmDoT7rT4jvdLsz4="} alt="" style={{ width: '50%', height: 'auto' }} />
                         </div>
                         <div className='name' style={{ position: 'absolute', top: '6%', left: '23%', width: 'auto', height: 'auto' }}>
-                            <h3>Vignesh G</h3>
+                            <h3>{data?.student?.name}</h3>
                         </div>
+                    </div>
+                    <div className="button ">
+                        <Button onClick={()=>setUploadModal(true)} variant='contained' >Change Photo</Button>
                     </div>
                 </div>
                 <br />
@@ -100,6 +105,9 @@ const ProfilePage = () => {
             {/* </div> */}
             <StudentModal modal={modal} setModal={setModal}>
                 <EditStudentForm data={data} modal={modal} setModal={setModal} />
+            </StudentModal >
+            <StudentModal modal={uploadModal} setModal={setUploadModal}>
+                <UploadImage />
             </StudentModal >
 
 

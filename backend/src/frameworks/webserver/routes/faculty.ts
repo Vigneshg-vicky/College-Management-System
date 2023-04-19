@@ -13,6 +13,8 @@ import { studentRepositoryMongoDB } from "../../database/mongoDB/repository/stud
 import { FacultyRepositoryMongoDb } from "../../database/mongoDB/repository/FacultyRepositoryMongoDb";
 import { FacultyRepository } from "../../../applications/repositories/FacultyRepository";
 import uploadProfilePic from '../middlewares/multer'
+import { ExamDbRepository } from "../../../applications/repositories/ExamRepositoryInterface";
+import { ExamRepositoryMongoDb } from "../../database/mongoDB/repository/ExamRepositoryMongoDb";
 
 export default function facultyRouter(redisClient: redisClient) {
     const router = express.Router();
@@ -27,10 +29,15 @@ export default function facultyRouter(redisClient: redisClient) {
         StudentRepository,
         studentRepositoryMongoDB,
         FacultyRepositoryMongoDb,
-        FacultyRepository)
+        FacultyRepository,
+        ExamDbRepository,
+        ExamRepositoryMongoDb)
 
     router.post('/edit', FacultyAuthMiddleware, uploadProfilePic.single('profilePic'), controller.editFaculty);
-    router.get('/details',FacultyAuthMiddleware,controller.getFaculty)
+    router.get('/details', FacultyAuthMiddleware, controller.getFaculty)
+    router.post('/add-exam', FacultyAuthMiddleware, controller.addExam)
+    router.get('/subjects', FacultyAuthMiddleware, controller.GetSubject)
+    router.get('/exams', FacultyAuthMiddleware, controller.getExams)
 
     return router
 }

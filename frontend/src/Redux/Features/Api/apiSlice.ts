@@ -24,7 +24,7 @@ const baseQuery = fetchBaseQuery({
 export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery,
-    tagTypes: ['student', 'admin', 'faculty', 'department'],
+    tagTypes: ['student', 'admin', 'faculty', 'department', 'subject', 'exam'],
     endpoints: (builder) => ({
         adminLogin: builder.mutation<ILoginResponse, adminLoginPayload>({
             query: (data) => ({
@@ -66,7 +66,7 @@ export const apiSlice = createApi({
                 method: 'POST',
                 body: data,
             }),
-            invalidatesTags: ['admin','faculty'],
+            invalidatesTags: ['admin', 'faculty'],
         }),
         addSubject: builder.mutation({
             query: (data) => ({
@@ -89,7 +89,7 @@ export const apiSlice = createApi({
                 method: 'POST',
                 body: data,
             }),
-            invalidatesTags:['faculty']
+            invalidatesTags: ['faculty']
         }),
         EditStudent: builder.mutation({
             query: (data) => ({
@@ -97,6 +97,14 @@ export const apiSlice = createApi({
                 method: 'PATCH',
                 body: data,
             })
+        }),
+        UploadStudentImage: builder.mutation({
+            query: (data) => ({
+                url: '/student/profile-pic',
+                method: 'PATCH',
+                body: data,
+            }),
+            invalidatesTags: ['student']
         }),
 
         getStudentWithDept: builder.query({
@@ -113,14 +121,32 @@ export const apiSlice = createApi({
                 method: 'POST',
                 body: data,
             }),
-            invalidatesTags:['faculty'],
+            invalidatesTags: ['faculty'],
         }),
-        GetFaculty:builder.query<IStudentResponse, void>({
-            query:() => '/faculty/details',
-            providesTags:['faculty']
-        })
-
-
+        GetFaculty: builder.query<IStudentResponse, void>({
+            query: () => '/faculty/details',
+            providesTags: ['faculty']
+        }),
+        GetSubjects: builder.query<IStudentResponse, void>({
+            query: () => '/faculty/subjects',
+            providesTags: ['faculty', 'subject']
+        }),
+        AddExams: builder.mutation({
+            query: (data) => ({
+                url: '/faculty/add-exam',
+                method: 'POST',
+                body: data,
+            }),
+            invalidatesTags: ['exam']
+        }),
+        GetExams: builder.query<IStudentResponse, void>({
+            query: () => '/faculty/exams',
+            providesTags: ['exam']
+        }),
+        GetStudentExam: builder.query<IStudentResponse, void>({
+            query: () => '/student/exams',
+            providesTags: ['student', 'exam'],
+        }),
 
 
     })
@@ -141,5 +167,10 @@ export const {
     useEditStudentMutation,
     useEditFacultyMutation,
     useGetFacultyQuery,
+    useGetSubjectsQuery,
+    useGetExamsQuery,
+    useAddExamsMutation,
+    useGetStudentExamQuery,
+    useUploadStudentImageMutation,
 
 } = apiSlice;

@@ -27,12 +27,6 @@ const StudentModal: any = (props: any) => {
           {props.children}
         </DialogContent>
         <DialogActions>
-          {/* <Button autoFocus onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button onClick={handleClose} autoFocus>
-            Edit
-          </Button> */}
         </DialogActions>
       </Dialog>
     </div>

@@ -7,12 +7,15 @@ export const DepartmentRepository = (repository: studentRepositoryMongoDBReturn)
     const getDepartmentData = async () => await repository.getDepartment();
     const TotalDepartment = async () => await repository.TotalDepartment();
     const addSubject = async (subject: SubjectInterface) => await repository.addSubject(subject)
+    const getDepartmentById = async (departmentId: string) => await repository.getDepartmentById(departmentId)
+
 
     return {
         addDepartment,
         getDepartmentData,
         TotalDepartment,
         addSubject,
+        getDepartmentById,
     }
 }
 

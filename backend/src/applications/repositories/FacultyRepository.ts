@@ -1,3 +1,4 @@
+import Faculty from "../../frameworks/database/mongoDB/models/FacultyModel";
 import { FacultyRepositoryMongoDbReturn } from "../../frameworks/database/mongoDB/repository/FacultyRepositoryMongoDb";
 import { AddFacultyInterface, EditFacultyInterface } from "../../types/FaculyInterface";
 
@@ -27,12 +28,18 @@ export const FacultyRepository = async (repository: FacultyRepositoryMongoDbRetu
         return faculty;
     }
 
+    const getFacultyByDept = async (departmentId: string) => {
+       const faculty = await Faculty.findOne({ department: departmentId })
+       return faculty;
+    }
+
     return {
         getFacultyByEmail,
         TotalFaculty,
         addFaculty,
         EditFaculty,
         GetFacultyById,
+        getFacultyByDept,
     }
 
 }

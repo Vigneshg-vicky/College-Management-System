@@ -7,17 +7,22 @@ import {
     Select,
     TextField,
 } from "@mui/material";
-// import { TimePicker } from '@mui/x-date-pickers-pro/TimePicker';
+import { useAddExamsMutation } from "../../Redux/Features/Api/apiSlice";
 
-const ExamForm = () => {
-    const [startTime, setStartTime] = useState(null);
-    const [endTime, setEndTime] = useState(null);
+// import { TimePicker } from '@mui/x-date-pickers';
+
+const ExamForm = (props: any) => {
+
+    const [AddExam] = useAddExamsMutation();
+    // const [startTime, setStartTime] = useState(null);
+    // const [endTime, setEndTime] = useState(null);
+
     const [examType, setExamType] = useState("");
     const [subject, setSubject] = useState("");
-    const [date, setDate] = useState("");
-    const [totalMarks, setTotalMarks] = useState("");
+    // const [date, setDate] = useState("");
+    const [totalMark, setTotalMarks] = useState("");
     const [examCode, setExamCode] = useState("");
-    const [passingMarks, setPassingMarks] = useState("");
+    const [passMark, setPassingMarks] = useState("");
 
     const handleExamTypeChange = (event: any) => {
         setExamType(event.target.value);
@@ -27,9 +32,9 @@ const ExamForm = () => {
         setSubject(event.target.value);
     };
 
-    const handleDateChange = (event: any) => {
-        setDate(event.target.value);
-    };
+    // const handleDateChange = (event: any) => {
+    //     setDate(event.target.value);
+    // };
 
     const handleTotalMarksChange = (event: any) => {
         setTotalMarks(event.target.value);
@@ -43,8 +48,23 @@ const ExamForm = () => {
         setPassingMarks(event.target.value);
     };
 
+    const SubmitHandler = async (e: any) => {
+        e.preventDefault();
+        const data = {
+            examType,
+            examCode,
+            passMark,
+            totalMark,
+            subject,
+        }
+        const res = await AddExam(data).unwrap();
+        if (res.status === 'success') {
+            props.refetch();
+        }
+    }
+
     return (
-        <form>
+        <form onSubmit={SubmitHandler}>
             <FormControl fullWidth margin="normal">
                 <InputLabel variant="outlined" id="exam-type-label">Exam Type</InputLabel>
                 <Select
@@ -66,11 +86,12 @@ const ExamForm = () => {
                     value={subject}
                     onChange={handleSubjectChange}
                 >
-                    <MenuItem value="math">Math</MenuItem>
-                    <MenuItem value="english">English</MenuItem>
-                    <MenuItem value="science">Science</MenuItem>
+                    {props?.subject.map((subject: any) => (
+                        <MenuItem key={subject.subjectName} value={subject.subjectName}>{subject.subjectName}</MenuItem>
+                    ))}
                 </Select>
             </FormControl>
+
             {/* <TimePicker
                 label="Start Time"
                 inputFormat="hh:mm a"
@@ -82,12 +103,20 @@ const ExamForm = () => {
             />
             <TimePicker
                 label="End Time"
-                inputFormat="hh:mm a"
                 value={endTime}
                 onChange={(newValue) => {
                     setEndTime(newValue);
                 }}
-                renderInput={(params: any) => <TextField {...params} />}
+                renderInput={(params: any) => (
+                    <TextField
+                        {...params}
+                        InputProps={{
+                            inputProps: {
+                                format: "hh:mm a"
+                            }
+                        }}
+                    />
+                )}
             /> */}
             <TextField
                 fullWidth
@@ -95,7 +124,7 @@ const ExamForm = () => {
                 id="total-marks"
                 label="Total Marks"
                 type="number"
-                value={totalMarks}
+                value={totalMark}
                 onChange={handleTotalMarksChange}
             />
             <TextField
@@ -112,10 +141,10 @@ const ExamForm = () => {
                 id="passing-marks"
                 label="Passing Marks"
                 type="number"
-                value={passingMarks}
+                value={passMark}
                 onChange={handlePassingMarksChange}
             />
-            <Button sx={{ marginTop: 2 }} variant="contained">Add Exam</Button>
+            <Button type="submit" sx={{ marginTop: 2 }} variant="contained">Add Exam</Button>
         </form>
     );
 };

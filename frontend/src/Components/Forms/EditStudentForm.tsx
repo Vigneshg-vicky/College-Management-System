@@ -49,11 +49,18 @@ const EditStudentForm = ({ data, modal, setModal }: { data: any, modal: any, set
     const [dob, setDob] = useState('');
 
     const SubmitHandler = async (data: any) => {
-        // Do something with the form data
-        data.dob = dob
-        const res: any = await editStudent(data)
-        if (res.status === 'success') {
+        try {
 
+            // Do something with the form data
+            data.dob = dob
+            console.log('THis is the data', data)
+            const res: any = await editStudent(data).unwrap();
+            if (res.status === 'success') {
+                console.log('success', res)
+                setModal(!modal)
+            }
+        } catch (error) {
+            console.log(error)
         }
 
     };
@@ -62,7 +69,6 @@ const EditStudentForm = ({ data, modal, setModal }: { data: any, modal: any, set
         <form className={classes.form} onSubmit={handleSubmit(SubmitHandler)}>
             <TextField
                 label="Name"
-                value={name}
                 // onChange={(event) => setName(event.target.value)}
                 {...register('name')}
             />
@@ -70,7 +76,7 @@ const EditStudentForm = ({ data, modal, setModal }: { data: any, modal: any, set
             <TextField
                 label="Email"
                 type="email"
-                value={email}
+                // value={email}
                 // onChange={(event) => setEmail(event.target.value)}
                 {...register('email')}
             />

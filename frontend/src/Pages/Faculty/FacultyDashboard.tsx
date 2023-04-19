@@ -1,5 +1,4 @@
 import ActionAreaCard from '../../Components/Cards/UserProfileCard'
-import FacultyNavbar from '../../Components/MUI/FacultyNavBar'
 import AccessibleTable from '../../Components/Tables/StudentTable'
 import { useGetFacultyQuery } from '../../Redux/Features/Api/apiSlice';
 

@@ -14,6 +14,8 @@ import { RegistrationNumber } from "../../services/GenerateRegisteration"
 import { FacultyRepositoryMongoDb } from "../../database/mongoDB/repository/FacultyRepositoryMongoDb"
 import { FacultyRepository } from "../../../applications/repositories/FacultyRepository"
 import adminAuthMiddleware from "../middlewares/AdminAuthMiddleware"
+import EmailService from "../../services/EmailService"
+import { EmailServiceInterfaces } from "../../../applications/services/EmailServiceInterface"
 
 export default function adminRouter() {
     const router = express.Router()
@@ -31,6 +33,8 @@ export default function adminRouter() {
         RegistrationNumber,
         FacultyRepositoryMongoDb,
         FacultyRepository,
+        EmailService,
+        EmailServiceInterfaces,
     );
 
     router.post('/add-department', adminAuthMiddleware, controller.AddDepartment)

@@ -15,6 +15,8 @@ import { FacultyCheck } from "../../applications/useCases/Faculty/EditFacultyChe
 import { CloudinaryServiceInterface } from "../../applications/services/CloudinaryService";
 import { EditFacultyInterface } from "../../types/FaculyInterface";
 import { Cloudinary } from "../../frameworks/services/cloudinary";
+import { ExamDbInterface } from "../../applications/repositories/ExamRepositoryInterface";
+import { ExamRepositoryMongoDb } from "../../frameworks/database/mongoDB/repository/ExamRepositoryMongoDb";
 
 interface RequestWithFile extends Request {
     file?: Express.Multer.File;
@@ -38,6 +40,8 @@ const FacultyController = (departmentDbRepository: DepartmentDbInterface,
     studentDbRepositoryImpl: studentRepositoryMongoDB,
     FacultyImpl: FacultyRepositoryMongoDb,
     facultyInterface: FacultyDbInterface,
+    ExamInterface: ExamDbInterface,
+    ExamImpl: ExamRepositoryMongoDb,
 ) => {
     const DbRepositoryDepartment = departmentDbRepository(departmentDbImpl());
     const dbRepositoryAdmin = AdminDbRepository(adminDbRepositoryImpl());
@@ -45,6 +49,7 @@ const FacultyController = (departmentDbRepository: DepartmentDbInterface,
     const dbRepositoryStudent = studentDbRepository(studentDbRepositoryImpl());
     const dbFacultyRepository = facultyInterface(FacultyImpl());
     const CloudinaryRepository = CloudinaryServiceInterface(Cloudinary());
+    const ExamRepository = ExamInterface(ExamImpl());
 
     const editFaculty = asyncHandler(async (req: any, res: Response) => {
 
@@ -66,15 +71,61 @@ const FacultyController = (departmentDbRepository: DepartmentDbInterface,
         const facultyId = req.faculty;
         const facultyData = await (await dbFacultyRepository).GetFacultyById(facultyId);
         res.json({
-            status:'success',
-            message:'faculty data fetched',
+            status: 'success',
+            message: 'faculty data fetched',
             facultyData
+        })
+    })
+
+    const addExam = asyncHandler(async (req: any, res: Response) => {
+        const facultyId = req.faculty;
+        const { examType, examCode, passMark, totalMark, subject } = req.body;
+        const examDetails = {
+            examType,
+            examCode,
+            passMark,
+            totalMark,
+            subject,
+            facultyId,
+        }
+        const addExam = await ExamRepository.AddExam(examDetails);
+        res.json({
+            status: 'success',
+            message: 'Exam Added',
+            addExam
+        })
+    })
+
+    const GetSubject = asyncHandler(async (req: any, res: Response) => {
+        const facultyId = req.faculty;
+        const getFaculty: any | null = await (await dbFacultyRepository).GetFacultyById(facultyId)
+        const dept: string = getFaculty?.department;
+        const getDepartment = await DbRepositoryDepartment.getDepartmentById(dept)
+
+        res.json({
+            status: 'success',
+            message: 'Subject Fetched',
+            getDepartment,
+        })
+    })
+
+    const getExams = asyncHandler(async (req: any, res: Response) => {
+        const facultyId = req.faculty;
+        const exams = await ExamRepository.GetExams(facultyId);
+
+        res.json({
+            status: 'success',
+            message: 'Exams Fetched',
+            exams,
         })
     })
 
     return {
         editFaculty,
         getFaculty,
+        addExam,
+        GetSubject,
+        getExams,
     }
 
 }

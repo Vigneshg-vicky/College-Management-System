@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './App.css'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import AdminOutlet from './Outlet/AdminOutlet';
@@ -13,24 +12,16 @@ import "primereact/resources/primereact.min.css";
 //icons
 import "primeicons/primeicons.css";
 import LoginPage from './Pages/Admin/LoginPage';
-import FacultyLogin from './Pages/Faculty/Login';
 import StudentLogin from './Pages/Student/Login';
 import AdminHome from './Pages/Admin/Home';
 import AddDepartment from './Pages/Admin/AddDepartment';
 import { ToastContainer } from 'react-toastify';
-import React from "react";
 import AddStudent from './Pages/Admin/addStudent';
 import FacultyAdd from './Pages/Admin/FacultyAdd';
 import AddSubject from './Pages/Admin/SubjectAdd';
-import Home from './Pages/Student/Home';
-import FacultyHome from './Pages/Faculty/facultyHome';
 import OurFaculties from './Pages/Admin/OurFaculties';
 import OurStudents from './Pages/Admin/OurStudents';
-import ProfilePage from './Pages/Student/ProfilePage';
 import StudentRoutes from './Routes/StudentRoutes';
-import FacultyDashboard from './Pages/Faculty/FacultyDashboard';
-import FacultyExams from './Pages/Faculty/FacultyExams';
-import FacultyAttendance from './Pages/Faculty/FacultyAttendance';
 import FacultyRoutes from './Routes/FacultyRoutes';
 
 export function LoadingSpinner() {

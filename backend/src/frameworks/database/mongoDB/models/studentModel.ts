@@ -6,15 +6,18 @@ const studentsSchema = new Schema(
             type: String,
             required: [true, 'Please Enter the name!'],
         },
+        password: {
+            type: String,
+            default: '',
+        },
+        firstLogin: {
+            type: Boolean,
+            default: true,
+        },
         email: {
             type: String,
             required: [true, 'Please enter an Email!'],
-            unique: [true, 'This email has already been used!'],
         },
-        // password:{
-        //     type:String,
-        //     required:[true,'Please enter a password']
-        // },
         department: {
             type: String,
             required: [true, 'Select a department!'],
@@ -31,6 +34,11 @@ const studentsSchema = new Schema(
             type: Number,
         },
         gender: {
+            type: String,
+        },
+        nationality: {
+            type: String,
+        }, url: {
             type: String,
         }
     },

@@ -18,6 +18,11 @@ export const DepartmentdRepositoryMongoDb = () => {
         return departments;
     }
 
+    const getSubjects = async (departmentId: string) => {
+        const subjects = await Department.find({ _id: departmentId }).select('Subjects');
+        return subjects;
+    }
+
     const addSubject = async (SubjectInfo: SubjectInterface) => {
         const department = SubjectInfo.department;
         console.log('this is the data', SubjectInfo)
@@ -36,11 +41,15 @@ export const DepartmentdRepositoryMongoDb = () => {
 
     }
 
+    const getDepartmentById = async (departmentId: string) => await Department.findOne({ _id: departmentId }).select('Subjects')
+
     return {
         addDepartment,
         getDepartment,
         TotalDepartment,
         addSubject,
+        getSubjects,
+        getDepartmentById,
     }
 }
 

@@ -17,6 +17,8 @@ import { RegistrationNumber } from "../../frameworks/services/GenerateRegisterat
 import { FacultyRepositoryMongoDb } from "../../frameworks/database/mongoDB/repository/FacultyRepositoryMongoDb";
 import { FacultyDbInterface } from "../../applications/repositories/FacultyRepository";
 import { AddFacultyInterface } from "../../types/FaculyInterface";
+import { EmailService } from "../../frameworks/services/EmailService";
+import { EmailServiceInterface } from "../../applications/services/EmailServiceInterface";
 
 const AdminController = (departmentDbRepository: DepartmentDbInterface,
     departmentDbImpl: DepartmentdRepositoryMongoDb,
@@ -31,6 +33,8 @@ const AdminController = (departmentDbRepository: DepartmentDbInterface,
     RegisterNumberImpl: RegistrationNumber,
     FacultyImpl: FacultyRepositoryMongoDb,
     facultyInterface: FacultyDbInterface,
+    EmailServiceImpl: EmailService,
+    EmailServiceInterface: EmailServiceInterface,
 ) => {
     const DbRepositoryDepartment = departmentDbRepository(departmentDbImpl());
     const dbRepositoryAdmin = AdminDbRepository(adminDbRepositoryImpl());
@@ -38,11 +42,11 @@ const AdminController = (departmentDbRepository: DepartmentDbInterface,
     const dbRepositoryStudent = studentDbRepository(studentDbRepositoryImpl());
     const registerNoService = RegisterNumberInterface(RegisterNumberImpl())
     const dbFacultyRepository = facultyInterface(FacultyImpl());
-
+    const EmailService = EmailServiceInterface(EmailServiceImpl())
 
     const AddDepartment = asyncHandler(async (req: Request, res: Response) => {
         const { department }: { department: string } = req.body;
-        const Added:any = await addDepartment(department, DbRepositoryDepartment)
+        const Added: any = await addDepartment(department, DbRepositoryDepartment)
 
         res.json({
             status: 'success',
@@ -71,12 +75,14 @@ const AdminController = (departmentDbRepository: DepartmentDbInterface,
             gender,
             contact_no,
         }
-        console.log(studentData)
 
         const StudentAdd = await addStudent(studentData, dbRepositoryStudent, registerNoService)
 
-        console.log('object')
-        console.log('object', StudentAdd)
+
+
+        const sendMail = await EmailService.sendEmail(email, StudentAdd)
+
+        console.log('I am the response of the sent email', sendMail)
 
         res.json({
             status: 'success',
