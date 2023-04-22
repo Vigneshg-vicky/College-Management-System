@@ -147,6 +147,14 @@ export const apiSlice = createApi({
             query: () => '/student/exams',
             providesTags: ['student', 'exam'],
         }),
+        SetStudentPassword: builder.mutation({
+            query: (data) => ({
+                url: '/student/password',
+                method: 'PATCH',
+                body: data,
+            }),
+            invalidatesTags: ['student']
+        })
 
 
     })
@@ -172,5 +180,6 @@ export const {
     useAddExamsMutation,
     useGetStudentExamQuery,
     useUploadStudentImageMutation,
+    useSetStudentPasswordMutation,
 
 } = apiSlice;

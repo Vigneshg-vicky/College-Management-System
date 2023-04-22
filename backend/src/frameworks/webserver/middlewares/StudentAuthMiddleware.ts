@@ -13,9 +13,7 @@ const StudentAuthMiddleware = async (req: any, res: Response, next: NextFunction
     }
     try {
         const decodedToken: any = await authService().verifyToken(token)
-        console.log(decodedToken)
         const payload = decodedToken.payload;
-        console.log(payload)
         req.student = payload;
         next();
     } catch (err) {

@@ -35,7 +35,7 @@ export const studentRepositoryMongoDB = () => {
     }
 
     const uploadFile = async (id: string, url: string) => {
-        console.log('these are the data', id, url)  
+        console.log('these are the data', id, url)
         return await Student.findByIdAndUpdate({ _id: id }, { url: url })
     }
 
@@ -64,6 +64,9 @@ export const studentRepositoryMongoDB = () => {
         return students
     }
 
+    const ChangePassword = async (id: string, hashedPassword: string) => await Student.findByIdAndUpdate({ _id: id }, { $set: { password: hashedPassword, firstLogin: false } })
+
+
 
 
     return {
@@ -75,6 +78,7 @@ export const studentRepositoryMongoDB = () => {
         getStudentWithDept,
         getStudentById,
         uploadFile,
+        ChangePassword,
     }
 }
 

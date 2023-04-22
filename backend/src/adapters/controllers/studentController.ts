@@ -7,7 +7,7 @@ import { AuthServiceInterface } from "../../applications/services/AuthServiceInt
 import { FacultyRepositoryMongoDb } from "../../frameworks/database/mongoDB/repository/FacultyRepositoryMongoDb";
 import { AdminRepositoryMongoDB } from "../../frameworks/database/mongoDB/repository/adminRepositoryMongoDB";
 import { studentRepositoryMongoDB } from "../../frameworks/database/mongoDB/repository/studentsRepositoryMongoDB";
-import { AuthService } from "../../frameworks/services/authServices";
+import { AuthService, authService } from "../../frameworks/services/authServices";
 import { redisClient } from '../../app';
 import { redisRepository } from '../../frameworks/database/redis/setCache';
 import { cacheRepositoryInterface } from '../../applications/repositories/cacheRepositoryInterface';
@@ -19,6 +19,8 @@ import { GetStudentDepartment } from '../../applications/useCases/Student/Studen
 import { UploadFile } from '../../applications/useCases/Student/UploadFile';
 import { Cloudinary } from "../../frameworks/services/cloudinary";
 import { CloudinaryServiceInterface } from "../../applications/services/CloudinaryService";
+import { PasswordChange } from '../../applications/useCases/Student/ChangePassword';
+import { authServiceInterface } from '../../applications/repositories/AuthServiceInterface';
 
 const StudentController = (departmentDbRepository: DepartmentDbInterface,
     departmentDbImpl: DepartmentdRepositoryMongoDb,
@@ -32,7 +34,10 @@ const StudentController = (departmentDbRepository: DepartmentDbInterface,
     FacultyImpl: FacultyRepositoryMongoDb,
     facultyInterface: FacultyDbInterface,
     ExamInterface: ExamDbInterface,
-    ExamImpl: ExamRepositoryMongoDb
+    ExamImpl: ExamRepositoryMongoDb,
+    authServiceImpl: AuthService,
+    authServiceInterface: AuthServiceInterface,
+
 ) => {
     const DbRepositoryDepartment = departmentDbRepository(departmentDbImpl());
     const dbRepositoryAdmin = AdminDbRepository(adminDbRepositoryImpl());
@@ -41,7 +46,7 @@ const StudentController = (departmentDbRepository: DepartmentDbInterface,
     const dbFacultyRepository = facultyInterface(FacultyImpl());
     const dbExamRepository = ExamInterface(ExamImpl());
     const CloudinaryRepository = CloudinaryServiceInterface(Cloudinary());
-
+    const AuthService = authServiceInterface(authServiceImpl());
 
     const getStudentData = asyncHandler(async (req: any, res: Response) => {
         const studentId = req.student;
@@ -102,12 +107,27 @@ const StudentController = (departmentDbRepository: DepartmentDbInterface,
         })
     })
 
+    const ChangePassword = asyncHandler(async (req: any, res: Response) => {
+        const studentId = req.student;
+        const { newPassword, oldPassword = '' } = req.body;
+        console.log('this is my old password', oldPassword)
+        const ChangedPassword = await PasswordChange(studentId, dbRepositoryStudent, AuthService, newPassword, oldPassword)
+        console.log('changed', ChangedPassword)
+
+        res.json({
+            status: 'success',
+            message: 'Password Changed',
+            password: true,
+        })
+    })
+
 
     return {
         getStudentData,
         EditStudent,
         GetExams,
         UploadPic,
+        ChangePassword,
     }
 
 

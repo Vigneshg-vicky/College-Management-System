@@ -40,8 +40,6 @@ const StudentAndFacultyLogin = () => {
 
   const submitHandler = async (data: UseFormInterface) => {
     try {
-
-
       console.log(student)
       console.log(data)
       if (!student) {
@@ -55,7 +53,7 @@ const StudentAndFacultyLogin = () => {
       else if (student) {
         console.log('this is faculty')
         const res = await FacultyLogin(data).unwrap();
-        console.log(res,'here is the token')
+        console.log(res, 'here is the token')
         if (res.status === 'success') {
           dispatch(setFacultyToken(res));
           navigate('/faculty/home')
@@ -107,8 +105,8 @@ const StudentAndFacultyLogin = () => {
 
           {!student ?
             <>
-              <label htmlFor="password" className="block text-900 font-medium mb-2">Registration No.</label>
-              <InputText type="text" placeholder="Registration No." className="w-full mb-3" {...register('reg_no')} />
+              <label htmlFor="password" className="block text-900 font-medium mb-2">Password</label>
+              <InputText type="text" placeholder="Password" className="w-full mb-3" {...register('reg_no')} />
               <small style={{ color: 'red' }}>
                 {errors.reg_no?.message}
               </small>
@@ -116,7 +114,7 @@ const StudentAndFacultyLogin = () => {
             :
             <>
               <label htmlFor="password" className="block text-900 font-medium mb-2">Password</label>
-              <InputText type="text" placeholder="Registration No." className="w-full mb-3" {...register('password')} />
+              <InputText type="text" placeholder="Password" className="w-full mb-3" {...register('password')} />
               <small style={{ color: 'red' }}>
                 {errors.password?.message}
               </small>

@@ -15,6 +15,8 @@ import StudentController from "../../../adapters/controllers/studentController";
 import { ExamDbRepository } from "../../../applications/repositories/ExamRepositoryInterface";
 import { ExamRepositoryMongoDb } from "../../database/mongoDB/repository/ExamRepositoryMongoDb";
 import uploadProfilePic from '../middlewares/multer'
+import { authService } from "../../services/authServices";
+import { AuthServiceInterface } from "../../../applications/services/AuthServiceInterface";
 
 export default function studentRouter(redisClient: redisClient) {
     const router = express.Router();
@@ -32,12 +34,15 @@ export default function studentRouter(redisClient: redisClient) {
         FacultyRepository,
         ExamDbRepository,
         ExamRepositoryMongoDb,
+        authService,
+        AuthServiceInterface,
     );
 
     router.get('/details', StudentAuthMiddleware, controller.getStudentData)
     router.patch('/edit-student', StudentAuthMiddleware, controller.EditStudent)
     router.patch('/profile-pic', StudentAuthMiddleware, uploadProfilePic.single('profilePic'), controller.UploadPic)
     router.get('/exams', StudentAuthMiddleware, controller.GetExams)
+    router.patch('/password', StudentAuthMiddleware, controller.ChangePassword)
 
 
 
