@@ -29,9 +29,17 @@ export const FacultyRepository = async (repository: FacultyRepositoryMongoDbRetu
     }
 
     const getFacultyByDept = async (departmentId: string) => {
-       const faculty = await Faculty.findOne({ department: departmentId })
-       return faculty;
+        const faculty = await Faculty.findOne({ department: departmentId })
+        return faculty;
     }
+
+    const getFaculty = async () => await repository.getFaculty();
+
+    const deleteFaculty = async (facultyId: string) => await repository.deleteFaculty(facultyId)
+
+    const checkFacultyDept = async (departmentId: string) => await repository.checkFacultyDept(departmentId)
+
+    const EditDeptFaculty = async (details: any) => await repository.EditDeptFaculty(details);
 
     return {
         getFacultyByEmail,
@@ -40,6 +48,10 @@ export const FacultyRepository = async (repository: FacultyRepositoryMongoDbRetu
         EditFaculty,
         GetFacultyById,
         getFacultyByDept,
+        getFaculty,
+        deleteFaculty,
+        checkFacultyDept,
+        EditDeptFaculty,
     }
 
 }

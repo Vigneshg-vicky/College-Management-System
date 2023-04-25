@@ -120,12 +120,25 @@ const FacultyController = (departmentDbRepository: DepartmentDbInterface,
         })
     })
 
+    const getExamsWithId = asyncHandler(async (req: any, res: Response) => {
+        const examId = req.params.id;
+        const facultyId = req.faculty;
+        console.log('this is exam Id', examId)
+        console.log('this is faculty Id', facultyId)
+        res.json({
+            status: 'success',
+            message: 'data fetched',
+            examId,
+        })
+    })
+
     return {
         editFaculty,
         getFaculty,
         addExam,
         GetSubject,
         getExams,
+        getExamsWithId,
     }
 
 }

@@ -23,6 +23,10 @@ import OurFaculties from './Pages/Admin/OurFaculties';
 import OurStudents from './Pages/Admin/OurStudents';
 import StudentRoutes from './Routes/StudentRoutes';
 import FacultyRoutes from './Routes/FacultyRoutes';
+import OTPLogin from './Pages/Student/OtpLogin';
+import FacultyOTPLogin from './Pages/Faculty/OtpLogin';
+import AllDepartments from './Pages/Admin/AllDepartments';
+import OurSubjects from './Pages/Admin/OurSubjects';
 
 export function LoadingSpinner() {
   return (
@@ -42,6 +46,8 @@ function App() {
         <Route path='/admin/login' element={<LoginPage />} />
         <Route path='/student/login' element={<StudentLogin />} />
         <Route path='/faculty/login' element={<StudentLogin />} />
+        <Route path='/student/otp' element={<OTPLogin />} />
+        <Route path='/faculty/otp' element={<FacultyOTPLogin />} />
         {/* <Route path='/faculty/login' element={<FacultyLogin />} /> */}
 
         {/* Protected Routes Admin */}
@@ -49,10 +55,12 @@ function App() {
           <Route path='/admin/add-student' element={<AddStudent />} />
           <Route path='/admin/add-faculty' element={<FacultyAdd />} />
           <Route path='/admin/home' element={<AdminHome />} />
+          <Route path='/admin/subjects' element={<OurSubjects />} />
           <Route path='/admin/add-department' element={<AddDepartment />} />
           <Route path='/admin/add-subject' element={<AddSubject />} />
           <Route path='/admin/faculties' element={<OurFaculties />} />
           <Route path='/admin/students' element={<OurStudents />} />
+          <Route path='/admin/departments' element={<AllDepartments />} />
         </Route>
 
 

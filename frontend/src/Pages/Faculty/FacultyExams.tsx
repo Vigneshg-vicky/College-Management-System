@@ -8,7 +8,7 @@ import { useGetSubjectsQuery, useGetExamsQuery } from "../../Redux/Features/Api/
 
 const FacultyExams = () => {
     const [modal, setModal] = useState(false)
-    const { data, isLoading, isSuccess, isError, error,refetch } = useGetSubjectsQuery()
+    const { data, isLoading, isSuccess, isError, error, refetch } = useGetSubjectsQuery()
     const { data: exams } = useGetExamsQuery();
     if (isLoading) {
         console.log('loading')
@@ -42,10 +42,10 @@ const FacultyExams = () => {
                 </div>
                 <hr className="m-5" />
                 <div className="table px-5">
-                    <ExamTable exam={exams}/>
+                    <ExamTable exam={exams} />
                 </div>
                 <EditModal modal={modal} setModal={setModal} >
-                    <ExamForm subject={thisData} refetch={refetch} />
+                    <ExamForm modal={modal} setModal={setModal} subject={thisData} refetch={refetch} />  {/* Add Exam */}
                 </EditModal>
 
             </>

@@ -51,6 +51,13 @@ export default function adminRouter() {
 
     router.post('/add-subject', controller.addSubject)
 
+    router.get('/subjects/:id',adminAuthMiddleware,controller.getSubjectsWithDept)
+
+    router.get('/faculty',adminAuthMiddleware,controller.getFaculty)
+
+    router.delete('/faculty/:id',adminAuthMiddleware,controller.deleteFaculty)
+    
+    router.patch('/edit-faculty',adminAuthMiddleware,controller.EditFaculty)
 
     return router
 }

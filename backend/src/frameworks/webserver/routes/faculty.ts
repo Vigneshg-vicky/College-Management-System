@@ -38,6 +38,9 @@ export default function facultyRouter(redisClient: redisClient) {
     router.post('/add-exam', FacultyAuthMiddleware, controller.addExam)
     router.get('/subjects', FacultyAuthMiddleware, controller.GetSubject)
     router.get('/exams', FacultyAuthMiddleware, controller.getExams)
+    router.get('/exams/:id', FacultyAuthMiddleware, controller.getExamsWithId)
+    // router.patch('/exams/:id', FacultyAuthMiddleware, controller.EditExamWithId)
+    // router.delete('/exams/:id', FacultyAuthMiddleware, controller.DeleteExamWithId)
 
     return router
 }

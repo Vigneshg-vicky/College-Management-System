@@ -19,6 +19,8 @@ import { FacultyDbInterface } from "../../applications/repositories/FacultyRepos
 import { AddFacultyInterface } from "../../types/FaculyInterface";
 import { EmailService } from "../../frameworks/services/EmailService";
 import { EmailServiceInterface } from "../../applications/services/EmailServiceInterface";
+import { request } from "http";
+import { FacultyEdit } from "../../applications/useCases/Admin/EditFaculty";
 
 const AdminController = (departmentDbRepository: DepartmentDbInterface,
     departmentDbImpl: DepartmentdRepositoryMongoDb,
@@ -144,6 +146,50 @@ const AdminController = (departmentDbRepository: DepartmentDbInterface,
         })
     })
 
+    const getSubjectsWithDept = asyncHandler(async (req: Request, res: Response) => {
+        const deptId = req.params.id;
+        console.log('this is the id', deptId)
+        const subjectData = await DbRepositoryDepartment.getSubjectsByDept(deptId)
+        const subjects = subjectData[0].Subjects;
+        console.log('this is the subjects', subjects)
+        res.json({
+            status: 'success',
+            message: 'subjects fetched',
+            subjects,
+        })
+    })
+
+    const getFaculty = asyncHandler(async (req: Request, res: Response) => {
+        const allFaculty = await (await dbFacultyRepository).getFaculty();
+        res.json({
+            status: 'success',
+            message: 'faculty fetched',
+            allFaculty,
+        })
+    })
+
+    const deleteFaculty = asyncHandler(async (req: any, res: Response) => {
+        const facultyId = req.params.id;
+        console.log(facultyId, 'this is my faculty id')
+        const facultyDelete = await (await dbFacultyRepository).deleteFaculty(facultyId)
+        res.json({
+            status: 'success',
+            message: 'faculty deleted',
+            facultyDelete
+        })
+    })
+
+    const EditFaculty = asyncHandler(async (req: Request, res: Response) => {
+        const { name, department, email, phoneNumber, facultyId } = req.body;
+        console.log(name,department,email,phoneNumber,facultyId,'THis is the dataaaaaaaa')
+        const EditFaculty = await FacultyEdit({ name, department, email, phoneNumber, facultyId }, dbFacultyRepository);
+        res.json({
+            status: 'success',
+            message: 'faculty Edited',
+            EditFaculty,
+        })
+    })
+
 
     return {
         AddDepartment,
@@ -152,7 +198,11 @@ const AdminController = (departmentDbRepository: DepartmentDbInterface,
         AdminHomeData,
         addFaculty,
         addSubject,
-        getStudentsWithDept
+        getStudentsWithDept,
+        getSubjectsWithDept,
+        getFaculty,
+        deleteFaculty,
+        EditFaculty,
     }
 }
 

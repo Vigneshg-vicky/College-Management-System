@@ -24,44 +24,39 @@ interface Department {
 //     department: yup.string().nullable().required('Please select a department'),
 // });
 
-const CollegeSearch = (props: PropsInterface) => {
+const CollegeSearch = (props: any) => {
 
     // const { register, handleSubmit, formState: { errors } } = useForm({
     //     resolver: yupResolver(schema),
     // });
 
-    const { data }: any = useGetDepartmentQuery();
+    const { data, isSuccess, isLoading, isError, error }: any = useGetDepartmentQuery();
 
-    const handleSearch = () => {
+        return (
+            <div className="p-fluid">
+                {/* <form onSubmit={handleSubmit}> */}
+                <div className="p-field mb-5">
+                    <Dropdown
+                        id="department"
+                        value={props.department}
+                        options={data?.Departments}
+                        optionLabel="department"
+                        placeholder="Select a department"
+                        onChange={(e) => props.setDepartment(e.value)}
+                    // {...register('department')}
+                    // className={errors.department ? 'p-invalid' : ''}
+                    />
+                    {/* <small className="p-error">{errors.department?.message}</small> */}
+                </div>
+                <div className="p-field">
+                    <Button label="Search" icon="pi pi-search"
+                        onClick={props.handleSearch}
+                    />
+                </div>
 
-    };
-
-    return (
-        <div className="p-fluid">
-            {/* <form onSubmit={handleSubmit}> */}
-            <div className="p-field mb-5">
-                <label htmlFor="department">Department</label>
-                <Dropdown
-                    id="department"
-                    value={props.department}
-                    options={data?.Departments}
-                    optionLabel="department"
-                    placeholder="Select a department"
-                    onChange={(e) => props.setDepartment(e.value)}
-                // {...register('department')}
-                // className={errors.department ? 'p-invalid' : ''}
-                />
-                {/* <small className="p-error">{errors.department?.message}</small> */}
+                {/* </form> */}
             </div>
-            <div className="p-field">
-                <Button label="Search" icon="pi pi-search"
-                    onClick={props.handleSearch}
-                />
-            </div>
-
-            {/* </form> */}
-        </div>
-    );
+        );
 };
 
 export default CollegeSearch;

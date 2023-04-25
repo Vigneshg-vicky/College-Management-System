@@ -1,8 +1,8 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { useState } from 'react'
 import * as yup from 'yup';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useFacultyLoginMutation, useStudentLoginMutation } from '../Redux/Features/Api/apiSlice';
@@ -63,6 +63,8 @@ const StudentAndFacultyLogin = () => {
       console.log(error)
       if (error.status === 401) {
         setError(error.data.message)
+      }else if(error.status ==='FETCH_ERROR') {
+        setError('Server is Down Try after sometime!')
       }
     }
   }
@@ -122,7 +124,16 @@ const StudentAndFacultyLogin = () => {
           }
 
           <div className="flex align-items-center justify-content-between mb-6">
-            <a className="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot your password?</a>
+            {student ?
+              <>
+                <a className="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer" onClick={() => navigate('/faculty/otp')}>Forgot your password?</a>
+              </>
+              :
+              <>
+                <a className="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer" onClick={() => navigate('/student/otp')}>Forgot your password?</a>
+              </>
+
+            }
             {student ?
               <>
                 <a className="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer" onClick={propsHandler} >Are you a Student?</a>

@@ -1,76 +1,83 @@
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { useGetExamsQuery } from '../../Redux/Features/Api/apiSlice';
 
-const styles = {
-    table: {
-        border: '1px solid #ccc',
-        borderCollapse: 'collapse',
+
+const exams = [
+    {
+        id: 1,
+        subject: 'Mathematics',
+        date: '2023-05-01',
+        time: '09:00 AM',
+        totalMarks: 100,
     },
-    tableHead: {
-        fontWeight: 'bold',
+    {
+        id: 2,
+        subject: 'English',
+        date: '2023-05-03',
+        time: '11:00 AM',
+        totalMarks: 80,
     },
-    tableContainer: {
-        overflowX: 'auto',
+    {
+        id: 3,
+        subject: 'Science',
+        date: '2023-05-05',
+        time: '10:00 AM',
+        totalMarks: 120,
     },
-};
+    {
+        id: 4,
+        subject: 'Social Studies',
+        date: '2023-05-07',
+        time: '01:00 PM',
+        totalMarks: 90,
+    },
+];
+
 
 const ExamTable = () => {
-    const exams = [
-        {
-            examName: 'Math',
-            totalMarks: 100,
-            percentage: 80,
-            grade: 'A',
-            status: 'Passed',
-        },
-        {
-            examName: 'English',
-            totalMarks: 100,
-            percentage: 70,
-            grade: 'B',
-            status: 'Passed',
-        },
-        {
-            examName: 'Science',
-            totalMarks: 100,
-            percentage: 90,
-            grade: 'A+',
-            status: 'Passed',
-        },
-        {
-            examName: 'Social Studies',
-            totalMarks: 100,
-            percentage: 60,
-            grade: 'C',
-            status: 'Failed',
-        },
-    ];
 
-    return (
-        <TableContainer sx={styles.tableContainer}>
-            <Table sx={styles.table}>
-                <TableHead sx={styles.tableHead}>
-                    <TableRow>
-                        <TableCell>Exam</TableCell>
-                        <TableCell>Total Marks</TableCell>
-                        <TableCell>Percentage</TableCell>
-                        <TableCell>Grade</TableCell>
-                        <TableCell>Status</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {exams.map((exam) => (
-                        <TableRow key={exam.examName}>
-                            <TableCell>{exam.examName}</TableCell>
-                            <TableCell>{exam.totalMarks}</TableCell>
-                            <TableCell>{exam.percentage}%</TableCell>
-                            <TableCell>{exam.grade}</TableCell>
-                            <TableCell>{exam.status}</TableCell>
+    const { data, isLoading, isSuccess, isError, error } = useGetExamsQuery();
+    if (isLoading) {
+        return <div>Loading...</div>
+    }
+    else if (isSuccess) {
+        console.log(data)
+        return (
+            <TableContainer component={Paper}>
+                <Table>
+                    <TableHead sx={{ '& tr:first-child th': { fontWeight: 'bold' } }}>
+                        <TableRow>
+                            <TableCell>#</TableCell>
+                            <TableCell>Subject</TableCell>
+                            <TableCell>Date</TableCell>
+                            <TableCell>Time</TableCell>
+                            <TableCell>Total Marks</TableCell>
+                            <TableCell>Status</TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
-    );
+                    </TableHead>
+                    <TableBody>
+                        {exams.map((exam, index) => (
+                            <TableRow key={exam.id}>
+                                <TableCell>{index + 1}</TableCell>
+                                <TableCell>{exam.subject}</TableCell>
+                                <TableCell>{exam.date}</TableCell>
+                                <TableCell>{exam.time}</TableCell>
+                                <TableCell>{exam.totalMarks}</TableCell>
+                                <TableCell>Sheduled</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        );
+    } else if (isError) {
+        if (error.status === 'FETCH_ERROR') {
+            return <p>Error: Data is not reached. Try after reloading server</p>;
+        } else {
+            return <p>Error: {error.error}</p>;
+
+        }
+    }
 }
 
-export default ExamTable;
+export default ExamTable

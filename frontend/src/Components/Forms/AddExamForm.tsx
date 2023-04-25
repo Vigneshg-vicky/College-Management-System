@@ -23,6 +23,14 @@ const ExamForm = (props: any) => {
     const [totalMark, setTotalMarks] = useState("");
     const [examCode, setExamCode] = useState("");
     const [passMark, setPassingMarks] = useState("");
+    const [start, setStart] = useState("");
+    const [end, setEnd] = useState("");
+    const [date, setDate] = useState("");
+
+    const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setDate(event.target.value);
+    };
+
 
     const handleExamTypeChange = (event: any) => {
         setExamType(event.target.value);
@@ -48,6 +56,14 @@ const ExamForm = (props: any) => {
         setPassingMarks(event.target.value);
     };
 
+    const handleExamStartTime = (event: any) => {
+        setStart(event.target.value)
+    }
+
+    const handleExamEndTime = (event: any) => {
+        setEnd(event.target.value)
+    }
+
     const SubmitHandler = async (e: any) => {
         e.preventDefault();
         const data = {
@@ -60,6 +76,7 @@ const ExamForm = (props: any) => {
         const res = await AddExam(data).unwrap();
         if (res.status === 'success') {
             props.refetch();
+            props.setModal(false)
         }
     }
 
@@ -71,12 +88,14 @@ const ExamForm = (props: any) => {
                     labelId="exam-type-label"
                     id="exam-type"
                     value={examType}
+                    error={Boolean(examType == '')}
                     onChange={handleExamTypeChange}
                 >
                     <MenuItem value="midterm">Midterm</MenuItem>
                     <MenuItem value="final">Final</MenuItem>
                     <MenuItem value="quiz">Quiz</MenuItem>
                 </Select>
+                {examType == '' ? <label style={{ color: 'red' }}>Select a value</label> : ""}
             </FormControl>
             <FormControl fullWidth margin="normal">
                 <InputLabel id="subject-label">Subject</InputLabel>
@@ -91,33 +110,6 @@ const ExamForm = (props: any) => {
                     ))}
                 </Select>
             </FormControl>
-
-            {/* <TimePicker
-                label="Start Time"
-                inputFormat="hh:mm a"
-                value={startTime}
-                onChange={(newValue) => {
-                    setStartTime(newValue);
-                }}
-                renderInput={(params: any) => <TextField {...params} />}
-            />
-            <TimePicker
-                label="End Time"
-                value={endTime}
-                onChange={(newValue) => {
-                    setEndTime(newValue);
-                }}
-                renderInput={(params: any) => (
-                    <TextField
-                        {...params}
-                        InputProps={{
-                            inputProps: {
-                                format: "hh:mm a"
-                            }
-                        }}
-                    />
-                )}
-            /> */}
             <TextField
                 fullWidth
                 margin="normal"
@@ -135,6 +127,35 @@ const ExamForm = (props: any) => {
                 value={examCode}
                 onChange={handleExamCodeChange}
             />
+            <TextField
+                fullWidth
+                margin="normal"
+                id="starting-time"
+                label="Start Time"
+                value={start}
+                onChange={handleExamStartTime}
+            />
+            <TextField
+                fullWidth
+                margin="normal"
+                id="end-time"
+                label="Ending Time"
+                value={end}
+                onChange={handleExamEndTime}
+            />
+            <TextField
+                fullWidth
+                margin="normal"
+                id="date"
+                label="Date"
+                type="date"
+                value={date}
+                onChange={handleDateChange}
+                InputLabelProps={{
+                    shrink: true,
+                }}
+            />
+
             <TextField
                 fullWidth
                 margin="normal"

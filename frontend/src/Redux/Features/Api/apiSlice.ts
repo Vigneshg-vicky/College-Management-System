@@ -111,6 +111,10 @@ export const apiSlice = createApi({
             query: (data) => `/admin/students/${data._id}`,
             providesTags: ['admin', 'student'],
         }),
+        GetSubjectWithDept: builder.query({
+            query: (id) => `/admin/subjects/${id}`,
+            providesTags: ['admin', 'subject']
+        }),
         getStudentData: builder.query<any, void>({
             query: () => '/student/details',
             providesTags: ['student'],
@@ -139,6 +143,18 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: ['exam']
         }),
+        EditSubject: builder.mutation({
+            query: (data) => ({
+                url: '/admin/edit-subject',
+                method: 'POST',
+                body: data
+            }),
+            invalidatesTags: ['admin', 'subject']
+        }),
+        GetAdminFaculty: builder.query({
+            query: () => '/admin/faculty',
+            providesTags: ['faculty'],
+        }),
         GetExams: builder.query<IStudentResponse, void>({
             query: () => '/faculty/exams',
             providesTags: ['exam']
@@ -147,6 +163,10 @@ export const apiSlice = createApi({
             query: () => '/student/exams',
             providesTags: ['student', 'exam'],
         }),
+        GetExamWithId: builder.query({
+            query: (id) => `/faculty/exams/:${id}`,
+            providesTags: ['exam']
+        }),
         SetStudentPassword: builder.mutation({
             query: (data) => ({
                 url: '/student/password',
@@ -154,7 +174,24 @@ export const apiSlice = createApi({
                 body: data,
             }),
             invalidatesTags: ['student']
-        })
+        }),
+        // GenerateStudentOTP:builder.query
+
+        DeleteFaculty: builder.mutation({
+            query: (id: string) => ({
+                url: `/admin/faculty/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['admin', 'faculty']
+        }),
+        EditAdminFaculty: builder.mutation({
+            query: (data) => ({
+                url: '/admin/edit-faculty',
+                method: 'PATCH',
+                body: data
+            }),
+            invalidatesTags: ['admin', 'faculty']
+        }),
 
 
     })
@@ -178,8 +215,14 @@ export const {
     useGetSubjectsQuery,
     useGetExamsQuery,
     useAddExamsMutation,
+    useGetAdminFacultyQuery,
     useGetStudentExamQuery,
     useUploadStudentImageMutation,
     useSetStudentPasswordMutation,
+    useGetExamWithIdQuery,
+    useGetSubjectWithDeptQuery,
+    useEditSubjectMutation,
+    useDeleteFacultyMutation,
+    useEditAdminFacultyMutation,
 
 } = apiSlice;

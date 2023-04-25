@@ -8,16 +8,30 @@ import {
   TableHead,
   TableRow,
   Paper,
-  MenuItem,
-  Select,
-  InputLabel,
-  FormControl,
+  IconButton,
 } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import StudentModal from "../Modals/EditModal";
+import EditExamForm from "../Forms/EditExam";
+import { useGetExamWithIdQuery } from "../../Redux/Features/Api/apiSlice";
+import DeleteConfirmationModal from "../Modals/DeleteModal";
 
 const ExamTable = ({ exam }: { exam: any }) => {
   const [status, setStatus] = useState('')
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [Id, setId] = useState('')
+  const [modal, setModal] = useState(false)
   const mainCheck = false;
   const [rows, setRows] = useState<any>(exam?.exams);
+
+  const handleEdit = (id: string) => {
+    console.log(id, 'this is edut id')
+    setId(id)
+    setModal(true)
+  }
+
+  const { data, isLoading, isSuccess, isError, error } = useGetExamWithIdQuery(Id)
 
   const handleMainCheckboxChange = (event: any) => {
     const isChecked = event.target.checked;
@@ -34,6 +48,12 @@ const ExamTable = ({ exam }: { exam: any }) => {
       setRows(newRows);
     }
   }
+
+  const handleDelete = (id: string) => {
+    console.log(id, 'this is dekete id')
+    setDeleteModal(true)
+  }
+
 
   const handleCheckboxChange = (event: any, rowId: number) => {
     const isChecked = event.target.checked;
@@ -56,7 +76,7 @@ const ExamTable = ({ exam }: { exam: any }) => {
     }
   };
   const handleEditStatusChange = (event: any, rowId: string) => {
-    if (event.target.value === 'Completed') {   
+    if (event.target.value === 'Completed') {
       setStatus('Completed')
     }
     const newRows = rows.map((row: any) => {
@@ -67,65 +87,57 @@ const ExamTable = ({ exam }: { exam: any }) => {
     });
     setRows(newRows);
   };
-  console.log('this is the data of exams', rows)
+
 
   return (
-    <TableContainer component={Paper}>
-      <Table className="border-3">
-        <TableHead>
-          <TableRow>
-            <TableCell padding="checkbox">
-              <Checkbox onChange={handleMainCheckboxChange} />
-            </TableCell>
-            <TableCell>Subject Name</TableCell>
-            <TableCell>Exam Code</TableCell>
-            <TableCell>State</TableCell>
-            <TableCell>Total Marks</TableCell>
-            <TableCell>Passing Marks</TableCell>
-            <TableCell>Edit Status</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {exam?.exams.map((row: any) => (
-            <TableRow key={row._id}>
+    <>
+      <TableContainer component={Paper}>
+        <Table className="border-3">
+          <TableHead>
+            <TableRow>
               <TableCell padding="checkbox">
-                <Checkbox
-                  checked={row.checked ?? false}
-                  onChange={(event) => handleCheckboxChange(event, row._id)}
-                />
+                <Checkbox onChange={handleMainCheckboxChange} />
               </TableCell>
-              <TableCell>{row.subject}</TableCell>
-              <TableCell>{row.ExamCode}</TableCell>
-              <TableCell>{row.status}</TableCell>
-              <TableCell>{row.TotalMarks}</TableCell>
-              <TableCell>{row.passMark}</TableCell>
-              <TableCell>
-                <FormControl variant="outlined" size="small">
-                  <InputLabel>Edit Status</InputLabel>
-                  <Select
-                    value={row.editStatus}
-                    disabled={row.editStatus === "Completed"}
-                    onChange={(event) => handleEditStatusChange(event, row._id)}
-                    label="Edit Status"
-                    sx={{
-                      minWidth: 120,
-                      "& .MuiSelect-select": {
-                        fontSize:
-                          row.editStatus === "Due" ? "0.75rem" : "0.875rem",
-                      },
-                    }}
-                  >
-                    <MenuItem value="Scheduled">Scheduled</MenuItem>
-                    <MenuItem value="Completed">Completed</MenuItem>
-                    <MenuItem value="cancelled">Cancelled</MenuItem>
-                  </Select>
-                </FormControl>
-              </TableCell>
+              <TableCell>Subject Name</TableCell>
+              <TableCell>Exam Code</TableCell>
+              <TableCell>State</TableCell>
+              <TableCell>Total Marks</TableCell>
+              <TableCell>Passing Marks</TableCell>
+              <TableCell>Edit Status</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {exam?.exams.map((row: any) => (
+              <TableRow key={row._id}>
+                <TableCell padding="checkbox">
+                  <Checkbox
+                    checked={row.checked ?? false}
+                    onChange={(event) => handleCheckboxChange(event, row._id)}
+                  />
+                </TableCell>
+                <TableCell>{row.subject}</TableCell>
+                <TableCell>{row.ExamCode}</TableCell>
+                <TableCell>{row.status}</TableCell>
+                <TableCell>{row.TotalMarks}</TableCell>
+                <TableCell>{row.passMark}</TableCell>
+                <TableCell>
+                  <IconButton color="primary" onClick={() => handleEdit(row._id)}>
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton color="error" onClick={() => handleDelete(row._id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer >
+      <StudentModal modal={modal} setModal={setModal}>
+        <EditExamForm />
+      </StudentModal>
+      <DeleteConfirmationModal modal={deleteModal} setModal={setDeleteModal} />
+    </>
   );
 };
 

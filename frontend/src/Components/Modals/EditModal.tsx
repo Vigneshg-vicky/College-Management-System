@@ -5,7 +5,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
-const StudentModal: any = (props: any) => {
+const EditModal: any = (props: any) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('xl'));
   const handleClose = () => {
@@ -33,4 +33,4 @@ const StudentModal: any = (props: any) => {
   );
 }
 
-export default StudentModal;
+export default EditModal;

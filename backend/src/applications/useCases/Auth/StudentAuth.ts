@@ -17,10 +17,19 @@ export const StudentLogin = async (
     if (!student) {
         throw new AppError("Account with this email doesn't exist", HttpStatus.UNAUTHORIZED)
     }
-    console.log(reg_no)
-    console.log(student)
-    if (reg_no !== student.Reg_No) {
-        throw new AppError('Registration Number is Incorrect!', HttpStatus.UNAUTHORIZED)
+    if (!student.password) {
+
+        if (reg_no.startsWith('ADM_')) {
+
+            if (reg_no !== student.Reg_No) {
+                throw new AppError('Registration Number is Incorrect!', HttpStatus.UNAUTHORIZED)
+            }
+        }
+    } else {
+        const checkPassword = await authService.comparePassword(reg_no, student.password);
+        if (!checkPassword) {
+            throw new AppError('Password is incorrect', HttpStatus.UNAUTHORIZED);
+        }
     }
     const token = authService.generateToken(student._id);
     return token;

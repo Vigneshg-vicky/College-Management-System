@@ -33,6 +33,8 @@ export const FacultyRepositoryMongoDb = () => {
         return faculty;
     }
 
+    const getFaculty = async () => await Faculty.find()
+
     const GetFacultyById = async (id: string) => {
         const faculty = await Faculty.findById({ _id: id })
         return faculty;
@@ -43,12 +45,38 @@ export const FacultyRepositoryMongoDb = () => {
         return count;
     }
 
+    const deleteFaculty = async (facultyId: string) => {
+        const deleteFac = await Faculty.findOneAndDelete({ _id: facultyId })
+        return deleteFac;
+    }
+
+    const EditDeptFaculty = async (details: any) => {
+        const edited = await Faculty.findByIdAndUpdate({ _id: details.facultyId }, {
+            $set: {
+                name: details.name,
+                email: details.email,
+                department: details.department,
+                phone: details.phoneNumber,
+            }
+        }, { new: true })
+        return edited;
+    }
+
+    const checkFacultyDept = async (departmentId: string) => {
+        const checkfaculty = Faculty.findOne({ department: departmentId })
+        return checkfaculty;
+    }
+
     return {
         getFacultyByEmail,
+        getFaculty,
         addFaculty,
         TotalFaculty,
         EditFaculty,
         GetFacultyById,
+        checkFacultyDept,
+        deleteFaculty,
+        EditDeptFaculty
     }
 }
 
